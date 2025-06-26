@@ -287,7 +287,7 @@ async function generateImage() {
         const proxyUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512`;
         generatedImage.src = proxyUrl;
         
-        // Ждем загрузки изображения
+       
         await new Promise((resolve, reject) => {
             generatedImage.onload = resolve;
             generatedImage.onerror = reject;
