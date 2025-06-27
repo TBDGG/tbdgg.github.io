@@ -5,146 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HSK1 Vocabulary - Sakura Style</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: url('https://i.imgur.com/Z8v9W8W.jpg') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            padding: 20px;
-            color: #5a3e2b;
-            min-height: 100vh;
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            max-width: 1200px;
-            margin: 0 auto;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .back-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        h1 {
-            color: #e75480;
-            text-align: center;
-            margin-top: 0;
-            font-size: 2.2em;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
+    body {
+        font-family: 'Arial', sans-serif;
+        background: url('https://i.imgur.com/Jl7bsQa.jpg') no-repeat center center fixed;
+        background-size: cover;
+        margin: 0;
+        padding: 20px;
+        color: #e0e0e0;
+        min-height: 100vh;
+    }
+    .container {
+        background-color: rgba(10, 15, 30, 0.85);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 0 30px rgba(100, 150, 255, 0.3);
+        max-width: 1200px;
+        margin: 0 auto;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(100, 150, 255, 0.2);
+    }
+    .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #3a5c8a, #6495ed);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(100, 150, 255, 0.5);
+    }
+    .back-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 25px rgba(100, 150, 255, 0.5);
+    }
+    h1 {
+        color: #6495ed;
+        text-align: center;
+        margin-top: 0;
+        font-size: 2.2em;
+        text-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+    }
+    .vocabulary-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+    .flashcard {
+        background-color: rgba(20, 30, 50, 0.7);
+        border-radius: 12px;
+        height: 180px;
+        perspective: 1000px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(100, 150, 255, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(100, 150, 255, 0.3);
+    }
+    .flashcard:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 25px rgba(100, 150, 255, 0.4);
+    }
+    .flashcard::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #3a5c8a, #6495ed);
+    }
+    .flashcard-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
+    .flashcard:hover .flashcard-inner {
+        transform: rotateY(180deg);
+    }
+    .flashcard-front, .flashcard-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    .flashcard-front {
+        background-color: rgba(30, 45, 70, 0.8);
+        color: #a8c6ff;
+        font-size: 42px;
+        font-weight: bold;
+        text-shadow: 0 0 8px rgba(100, 150, 255, 0.5);
+    }
+    .flashcard-back {
+        background: linear-gradient(135deg, #1a2035, #2a3a5a);
+        color: #e0e0e0;
+        transform: rotateY(180deg);
+        border: 1px solid rgba(100, 150, 255, 0.5);
+    }
+    .pinyin {
+        font-size: 22px;
+        margin-bottom: 10px;
+        color: #a8c6ff;
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(100, 150, 255, 0.3);
+    }
+    .translation {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+    .neon-effect {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        background: radial-gradient(circle at center, transparent 0%, rgba(10, 15, 30, 0.9) 70%);
+    }
+    @media (max-width: 768px) {
         .vocabulary-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         }
         .flashcard {
-            background-color: white;
-            border-radius: 12px;
-            height: 180px;
-            perspective: 1000px;
-            cursor: pointer;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .flashcard:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-        }
-        .flashcard::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #ffb6c1, #ff69b4);
-        }
-        .flashcard-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .flashcard:hover .flashcard-inner {
-            transform: rotateY(180deg);
-        }
-        .flashcard-front, .flashcard-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            box-sizing: border-box;
+            height: 160px;
         }
         .flashcard-front {
-            background-color: white;
-            color: #e75480;
-            font-size: 42px;
-            font-weight: bold;
-        }
-        .flashcard-back {
-            background: linear-gradient(135deg, #fff5f7, #ffecef);
-            color: #5a3e2b;
-            transform: rotateY(180deg);
-            border: 2px solid #ffb6c1;
+            font-size: 36px;
         }
         .pinyin {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #e75480;
-            font-weight: bold;
+            font-size: 18px;
         }
-        .translation {
-            font-size: 16px;
-            line-height: 1.4;
-        }
-        .sakura-fall {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        @media (max-width: 768px) {
-            .vocabulary-container {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            .flashcard {
-                height: 160px;
-            }
-            .flashcard-front {
-                font-size: 36px;
-            }
-            .pinyin {
-                font-size: 18px;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
     <div class="sakura-fall" id="sakura"></div>
