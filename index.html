@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TBD Image Generator - Вход</title>
+    <title>TBD Image Generator</title>
     <style>
         :root {
             --neon-purple: #8a2be2;
@@ -22,59 +22,57 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
         
-        .auth-container {
-            background-color: #1a1a2e;
-            padding: 30px;
-            border-radius: 10px;
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
             width: 100%;
-            max-width: 400px;
-            box-shadow: 0 0 25px rgba(138, 43, 226, 0.3);
         }
         
         h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
             background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
-            text-align: center;
         }
         
-        .form-group {
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
             margin-bottom: 20px;
         }
         
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #aaa;
+        .input-group {
+            display: flex;
+            gap: 10px;
         }
         
-        input {
-            width: 100%;
-            padding: 12px;
+        #prompt-input {
+            flex: 1;
+            padding: 12px 15px;
             border: 2px solid #333;
             border-radius: 8px;
-            background-color: #252540;
+            background-color: #1a1a2e;
             color: white;
             font-size: 1rem;
             outline: none;
             transition: all 0.3s;
         }
         
-        input:focus {
+        #prompt-input:focus {
             border-color: var(--neon-purple);
             box-shadow: 0 0 15px var(--neon-purple);
         }
         
-        button {
-            width: 100%;
-            padding: 12px;
+        #generate-btn {
+            padding: 12px 25px;
             background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
             color: white;
             border: none;
@@ -83,166 +81,407 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 1rem;
-            margin-top: 10px;
         }
         
-        button:hover {
+        #generate-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(138, 43, 226, 0.6);
         }
         
-        .switch-mode {
-            text-align: center;
-            margin-top: 20px;
-            color: #aaa;
+        #generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
         
-        .switch-mode a {
-            color: var(--neon-cyan);
-            text-decoration: none;
-            cursor: pointer;
+        .image-container {
+            position: relative;
+            width: 90%;
+            max-width: 512px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.3);
+            border: 1px solid #333;
+            min-height: 512px;
+            background-color: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #generated-image {
+            max-width: 100%;
+            max-height: 512px;
+            display: none;
+            border-radius: 8px;
+        }
+        
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--neon-purple);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         .error {
             color: #ff5555;
-            margin-top: 10px;
             text-align: center;
+            padding: 20px;
+        }
+        
+        .settings {
+            background-color: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        
+        .settings h3 {
+            margin-top: 0;
+            color: var(--neon-cyan);
+        }
+        
+        .settings-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .settings-group {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
+        }
+        
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            background-color: #252540;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: white;
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: #666;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        #generated-image {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #generated-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 120px;
+            height: 40px;
+            background: linear-gradient(135deg, transparent 0%, var(--bg-dark) 60%);
+            pointer-events: none;
+        }
+        
+        .auth-buttons {
+            margin-top: 15px;
+        }
+        
+        .auth-buttons button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .auth-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+        
+        .user-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #1a1a2e;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .user-info span {
+            color: var(--neon-cyan);
+        }
+        
+        .user-info button {
+            margin-left: 10px;
+            padding: 4px 8px;
+            background: #ff5555;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        #limit-info {
+            color: var(--neon-cyan);
         }
     </style>
 </head>
 <body>
-    <div class="auth-container">
-        <h1 id="auth-title">Вход</h1>
-        <div id="login-form">
-            <div class="form-group">
-                <label for="login-username">Логин</label>
-                <input type="text" id="login-username" placeholder="Введите ваш логин">
-            </div>
-            <div class="form-group">
-                <label for="login-password">Пароль</label>
-                <input type="password" id="login-password" placeholder="Введите ваш пароль">
-            </div>
+    <div class="header">
+        <h1>TBD IMAGE GENERATOR //by Dastan</h1>
+        <p>Введите описание изображения (на английском)</p>
+        
+        <div id="auth-buttons" class="auth-buttons">
             <button id="login-btn">Войти</button>
-            <div class="switch-mode">
-                Нет аккаунта? <a id="switch-to-register">Зарегистрироваться</a>
-            </div>
-            <div class="error" id="login-error"></div>
+            <button id="register-btn">Регистрация</button>
         </div>
         
-        <div id="register-form" style="display: none;">
-            <div class="form-group">
-                <label for="register-username">Логин</label>
-                <input type="text" id="register-username" placeholder="Придумайте логин">
-            </div>
-            <div class="form-group">
-                <label for="register-password">Пароль</label>
-                <input type="password" id="register-password" placeholder="Придумайте пароль">
-            </div>
-            <div class="form-group">
-                <label for="register-confirm">Подтвердите пароль</label>
-                <input type="password" id="register-confirm" placeholder="Повторите пароль">
-            </div>
-            <button id="register-btn">Зарегистрироваться</button>
-            <div class="switch-mode">
-                Уже есть аккаунт? <a id="switch-to-login">Войти</a>
-            </div>
-            <div class="error" id="register-error"></div>
+        <div id="user-info" class="user-info" style="display: none;">
+            Привет, <span id="username-display"></span>!
+            <button id="logout-btn">Выйти</button>
         </div>
     </div>
+    
+    <div class="settings">
+        <h3>Настройки генерации</h3>
+        <div class="settings-row">
+            <div class="settings-group">
+                <label for="model">Модель</label>
+                <select id="model">
+                    <option value="stable-diffusion-xl">SD XL (лучшее качество)</option>
+                    <option value="stable-diffusion-v1-5">SD 1.5 (базовая)</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <label for="steps">Шаги генерации</label>
+                <input type="number" id="steps" value="30" min="10" max="50">
+            </div>
+            <div class="settings-group">
+                <label for="width">Ширина</label>
+                <input type="number" id="width" value="512" min="256" max="1024" step="64">
+            </div>
+            <div class="settings-group">
+                <label for="height">Высота</label>
+                <input type="number" id="height" value="512" min="256" max="1024" step="64">
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <div class="input-group">
+            <input type="text" id="prompt-input" placeholder="Например: cyberpunk cityscape at night, neon lights, 4k">
+            <button id="generate-btn">Создать</button>
+        </div>
+    </div>
+    
+    <div class="image-container">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Генерация изображения...</p>
+            <p id="status-text">Это может занять 20-30 секунд</p>
+        </div>
+        <img id="generated-image" alt="Сгенерированное изображение">
+        <div class="error" id="error-message"></div>
+    </div>
+    
+    <footer>
+        Использует API TBD-API. 
+        <span id="limit-info">Лимит: <span id="remaining-generations"></span> из 5 генераций сегодня</span>
+    </footer>
 
     <script>
-        // Простая система аутентификации с использованием localStorage
-        const users = JSON.parse(localStorage.getItem('tbd-users')) || {};
-        
-        // Элементы формы входа
-        const loginForm = document.getElementById('login-form');
-        const loginUsername = document.getElementById('login-username');
-        const loginPassword = document.getElementById('login-password');
+        // Проверка аутентификации
+        const currentUser = localStorage.getItem('tbd-current-user');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const usernameDisplay = document.getElementById('username-display');
         const loginBtn = document.getElementById('login-btn');
-        const loginError = document.getElementById('login-error');
-        
-        // Элементы формы регистрации
-        const registerForm = document.getElementById('register-form');
-        const registerUsername = document.getElementById('register-username');
-        const registerPassword = document.getElementById('register-password');
-        const registerConfirm = document.getElementById('register-confirm');
         const registerBtn = document.getElementById('register-btn');
-        const registerError = document.getElementById('register-error');
+        const logoutBtn = document.getElementById('logout-btn');
+        const limitInfo = document.getElementById('limit-info');
+        const remainingGenerations = document.getElementById('remaining-generations');
         
-        // Переключатели между формами
-        const switchToRegister = document.getElementById('switch-to-register');
-        const switchToLogin = document.getElementById('switch-to-login');
-        const authTitle = document.getElementById('auth-title');
+        // Элементы генерации изображений
+        const promptInput = document.getElementById('prompt-input');
+        const generateBtn = document.getElementById('generate-btn');
+        const generatedImage = document.getElementById('generated-image');
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error-message');
+        const statusText = document.getElementById('status-text');
         
-        // Переключение между формами входа и регистрации
-        switchToRegister.addEventListener('click', () => {
-            loginForm.style.display = 'none';
-            registerForm.style.display = 'block';
-            authTitle.textContent = 'Регистрация';
-        });
-        
-        switchToLogin.addEventListener('click', () => {
-            registerForm.style.display = 'none';
-            loginForm.style.display = 'block';
-            authTitle.textContent = 'Вход';
-        });
-        
-        // Обработка регистрации
-        registerBtn.addEventListener('click', () => {
-            const username = registerUsername.value.trim();
-            const password = registerPassword.value.trim();
-            const confirm = registerConfirm.value.trim();
-            
-            if (!username || !password || !confirm) {
-                registerError.textContent = 'Все поля обязательны для заполнения';
-                return;
-            }
-            
-            if (password !== confirm) {
-                registerError.textContent = 'Пароли не совпадают';
-                return;
-            }
-            
-            if (users[username]) {
-                registerError.textContent = 'Пользователь с таким логином уже существует';
-                return;
-            }
-            
-            // Регистрируем нового пользователя
-            users[username] = { password };
-            localStorage.setItem('tbd-users', JSON.stringify(users));
-            
-            // Автоматически входим после регистрации
-            localStorage.setItem('tbd-current-user', username);
-            window.location.href = '../';
-        });
-        
-        // Обработка входа
+        // Обработчики кнопок аутентификации
         loginBtn.addEventListener('click', () => {
-            const username = loginUsername.value.trim();
-            const password = loginPassword.value.trim();
-            
-            if (!username || !password) {
-                loginError.textContent = 'Введите логин и пароль';
-                return;
-            }
-            
-            const user = users[username];
-            
-            if (!user || user.password !== password) {
-                loginError.textContent = 'Неверный логин или пароль';
-                return;
-            }
-            
-            // Сохраняем текущего пользователя
-            localStorage.setItem('tbd-current-user', username);
-            window.location.href = '../';
+            window.location.href = 'login';
         });
         
-        // Проверяем, если пользователь уже вошел
-        if (localStorage.getItem('tbd-current-user')) {
-            window.location.href = '../';
+        registerBtn.addEventListener('click', () => {
+            window.location.href = 'login';
+        });
+        
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('tbd-current-user');
+            location.reload();
+        });
+        
+        // Система лимитов
+        function getDailyGenerations() {
+            const today = new Date().toDateString();
+            const generations = JSON.parse(localStorage.getItem('tbd-generations')) || {};
+            
+            if (generations.date !== today) {
+                generations.date = today;
+                generations.count = 0;
+                generations.users = {};
+                localStorage.setItem('tbd-generations', JSON.stringify(generations));
+            }
+            
+            return generations;
         }
+        
+        function canGenerate() {
+            if (currentUser) return true; // Для зарегистрированных пользователей нет лимита
+            
+            const generations = getDailyGenerations();
+            return generations.count < 5;
+        }
+        
+        function incrementGenerationCount() {
+            if (currentUser) return; // Не считаем для зарегистрированных
+            
+            const generations = getDailyGenerations();
+            generations.count = (generations.count || 0) + 1;
+            localStorage.setItem('tbd-generations', JSON.stringify(generations));
+        }
+        
+        function updateUI() {
+            if (currentUser) {
+                authButtons.style.display = 'none';
+                userInfo.style.display = 'block';
+                usernameDisplay.textContent = currentUser;
+                limitInfo.style.display = 'none';
+            } else {
+                authButtons.style.display = 'block';
+                userInfo.style.display = 'none';
+                limitInfo.style.display = 'inline';
+                
+                const generations = getDailyGenerations();
+                const remaining = 5 - (generations.count || 0);
+                remainingGenerations.textContent = remaining > 0 ? remaining : 0;
+            }
+        }
+        
+        // Обновляем интерфейс при загрузке
+        updateUI();
+        
+        // Функция генерации изображения
+        async function generateImage() {
+            if (!canGenerate()) {
+                showError('Лимит генераций исчерпан (5 в день). Зарегистрируйтесь для снятия ограничений.');
+                return;
+            }
+            
+            const prompt = promptInput.value.trim();
+            if (!prompt) {
+                showError('Введите описание изображения');
+                return;
+            }
+            
+            // Показываем загрузку
+            loadingElement.style.display = 'flex';
+            generatedImage.style.display = 'none';
+            errorElement.style.display = 'none';
+            generateBtn.disabled = true;
+            statusText.textContent = 'Генерация через TBD Project...';
+            
+            try {
+                // 1. Попробуем через быстрый сервис
+                const proxyUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512`;
+                generatedImage.src = proxyUrl;
+                
+                // Ждем загрузки изображения
+                await new Promise((resolve, reject) => {
+                    generatedImage.onload = resolve;
+                    generatedImage.onerror = reject;
+                    setTimeout(() => reject(new Error('Таймаут загрузки')), 30000);
+                });
+                
+                generatedImage.style.display = 'block';
+                incrementGenerationCount();
+                updateUI();
+            } catch (firstError) {
+                try {
+                    // 2. Если первый способ не сработал - пробуем резервный
+                    statusText.textContent = 'Пробуем альтернативный сервис...';
+                    const backupUrl = `https://api.midjourneyapi.xyz/mj/v2/image?prompt=${encodeURIComponent(prompt)}`;
+                    const response = await fetch(backupUrl);
+                    const data = await response.json();
+                    
+                    if (data.imageUrl) {
+                        generatedImage.src = data.imageUrl;
+                        generatedImage.style.display = 'block';
+                        incrementGenerationCount();
+                        updateUI();
+                    } else {
+                        throw new Error('Сервер перегружен');
+                    }
+                } catch (secondError) {
+                    showError(`Ошибка: ${secondError.message}. Попробуйте: 
+                    1. Другой запрос (англ.)
+                    2. Подождать 1 минуту
+                    3. Обновить страницу`);
+                    console.error('Ошибки генерации:', firstError, secondError);
+                }
+            } finally {
+                loadingElement.style.display = 'none';
+                generateBtn.disabled = false;
+            }
+        }
+        
+        function showError(message) {
+            loadingElement.style.display = 'none';
+            errorElement.innerHTML = message;
+            errorElement.style.display = 'block';
+        }
+        
+        // Обработчики событий
+        generateBtn.addEventListener('click', generateImage);
+        promptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') generateImage();
+        });
+        
+        // Первая подсказка
+        promptInput.placeholder = "Например: " + [
+            "cyberpunk city at night",
+            "portrait of a beautiful elf",
+            "futuristic spaceship landing"
+        ][Math.floor(Math.random() * 3)];
     </script>
 </body>
 </html>
