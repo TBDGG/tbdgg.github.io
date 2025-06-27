@@ -14,7 +14,7 @@
         }
         
         body {
-            background-color: white;
+            background-color: #f5f5f5;
             color: #333;
             line-height: 1.7;
             overflow-x: hidden;
@@ -28,9 +28,9 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(135deg, #e8e8e8 0%, #d8d8d8 50%, #e8e8e8 100%);
+            background-size: 200% 200%;
+            animation: gradientBG 8s ease infinite;
         }
         
         @keyframes gradientBG {
@@ -39,15 +39,81 @@
             100% { background-position: 0% 50%; }
         }
         
+        /* Навигационное меню */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 30px;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: #d4af37;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
         .content {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            margin-top: 80px; /* Отступ для фиксированного меню */
         }
         
         header {
             text-align: center;
-            padding: 80px 0 50px;
+            padding: 60px 0 50px;
             position: relative;
         }
         
@@ -385,14 +451,42 @@
             .contact-phone {
                 font-size: 1.2rem;
             }
+            
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-menu {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                margin: 5px 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="parallax-bg"></div>
     
+    <!-- Навигационное меню -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Хушвахт Рахмихудоев</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#about" class="nav-link">Обо мне</a></li>
+                <li class="nav-item"><a href="#sports" class="nav-link">Виды спорта</a></li>
+                <li class="nav-item"><a href="#achievements" class="nav-link">Достижения</a></li>
+                <li class="nav-item"><a href="#training" class="nav-link">Тренировки</a></li>
+                <li class="nav-item"><a href="#contacts" class="nav-link">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+    
     <div class="content">
-        <header>
+        <header id="about">
             <h1>Хушвахт Рахмихудоев</h1>
             <div class="black-belt">Чёрный пояс по джиу-джитсу</div>
             <p>Мастер спорта по джиу-джитсу и грепплингу, чемпион международных турниров, профессиональный тренер</p>
@@ -410,7 +504,7 @@
             </div>
         </section>
         
-        <section class="sports-section">
+        <section class="sports-section" id="sports">
             <div class="sport-card">
                 <h3>Джиу-Джитсу</h3>
                 <p>Бразильское джиу-джитсу - боевое искусство, основой которого является борьба в партере, а также болевые и удушающие приёмы. Это искусство позволяет эффективно противостоять более крупному и сильному противнику.</p>
@@ -424,7 +518,7 @@
             </div>
         </section>
         
-        <section class="achievements">
+        <section class="achievements" id="achievements">
             <h2>Достижения и награды</h2>
             <p>За свою карьеру Хушвахт Рахмихудоев завоевал множество наград на престижных соревнованиях по джиу-джитсу и грепплингу.</p>
             
@@ -499,7 +593,6 @@
         </footer>
     </div>
     
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
         // Улучшенный параллакс-эффект
         document.addEventListener('mousemove', function(e) {
@@ -517,6 +610,18 @@
                     behavior: 'smooth'
                 });
             });
+        });
+        
+        // Фиксация меню при скролле
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                navbar.style.padding = '10px 0';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
+                navbar.style.padding = '15px 0';
+            }
         });
     </script>
 </body>
