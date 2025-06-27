@@ -3,703 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TBD Image Generator</title>
+    <title>Хушвахт Рахмихудоев - мастер джиу-джитсу и грепплинга</title>
     <style>
-
-        body {
-            font-family: 'Arial', sans-serif;
-            color: var(--text-light);
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            perspective: 1px;
-            transform-style: preserve-3d;
-            overflow-x: hidden;
-            overflow-y: auto;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
+        body {
+            background-color: white;
+            color: #333;
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+        
         .parallax-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             z-index: -1;
-            transform: translateZ(-1px) scale(2);
-        }
-
-        .parallax-stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 200%;
-            background: 
-                radial-gradient(2px 2px at 20px 30px, white, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, white, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, white, rgba(0,0,0,0));
-            background-size: 100px 100px;
-            z-index: -1;
-            transform: translateZ(-0.5px) scale(1.5);
-            animation: starsMove 200s linear infinite;
-        }
-
-        @keyframes starsMove {
-            0% { transform: translateZ(-0.5px) scale(1.5) translateY(0); }
-            100% { transform: translateZ(-0.5px) scale(1.5) translateY(-100%); }
-        }
-
-        :root {
-            --neon-purple: #8a2be2;
-            --neon-cyan: #00ffff;
-            --bg-dark: #0f0f1a;
-            --text-light: #f0f0f0;
+            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
         
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        .user-menu {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(26, 26, 46, 0.9);
-            border-radius: 8px;
-            padding: 10px 15px;
-            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            backdrop-filter: blur(5px);
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .user-name {
-            font-size: 0.9rem;
-            color: var(--neon-cyan);
-            margin-right: 5px;
-        }
-
-        .logout-btn {
-            background: none;
-            border: none;
-            color: #ff5555;
-            cursor: pointer;
-            font-size: 0.8rem;
-            padding: 0;
-            text-decoration: underline;
-        }
-
-        .container {
+        
+        .content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px 20px;
+            padding: 20px;
         }
-
-        .header {
+        
+        header {
             text-align: center;
-            margin-bottom: 30px;
+            padding: 80px 0 50px;
+            position: relative;
+        }
+        
+        header::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #000000, #d4af37);
+            margin: 30px auto;
+            border-radius: 2px;
+        }
+        
+        .black-belt {
+            display: inline-block;
+            background-color: #000;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
         }
         
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
-        }
-        
-        .auth-container {
-            background-color: #1a1a2e;
-            padding: 20px;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 400px;
-            margin: 20px auto;
-            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
-        }
-
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .auth-form h3 {
-            margin-top: 0;
-            color: var(--neon-cyan);
-            text-align: center;
-        }
-
-        .auth-form input {
-            padding: 12px;
-            border: 2px solid #333;
-            border-radius: 8px;
-            background-color: #252540;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .auth-form button {
-            padding: 12px;
-            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .auth-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.5);
-        }
-
-        .auth-switch {
-            color: var(--neon-cyan);
-            cursor: pointer;
-            text-align: center;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto 20px;
-        }
-        
-        .input-group {
-            display: flex;
-            gap: 10px;
-        }
-        
-        #prompt-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #333;
-            border-radius: 8px;
-            background-color: #1a1a2e;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s;
-        }
-        
-        #prompt-input:focus {
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 15px var(--neon-purple);
-        }
-        
-        #generate-btn {
-            padding: 12px 25px;
-            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
-        
-        #generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(138, 43, 226, 0.6);
-        }
-        
-        #generate-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .image-container {
-            position: relative;
-            width: 90%;
-            max-width: 512px;
-            margin: 20px auto;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 0 25px rgba(138, 43, 226, 0.3);
-            border: 1px solid #333;
-            min-height: 512px;
-            background-color: #1a1a2e;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        #generated-image {
-            max-width: 100%;
-            max-height: 512px;
-            display: none;
-            border-radius: 8px;
-        }
-        
-        .loading {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(138, 43, 226, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--neon-purple);
-            animation: spin 1s ease-in-out infinite;
+            font-size: 3.2rem;
             margin-bottom: 15px;
+            color: #222;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        h2 {
+            font-size: 2.2rem;
+            margin: 50px 0 25px;
+            color: #333;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
         }
         
-        .error {
-            color: #ff5555;
-            text-align: center;
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, #000000, #d4af37);
+            border-radius: 3px;
+        }
+        
+        h3 {
+            font-size: 1.6rem;
+            margin: 35px 0 20px;
+            color: #444;
+            font-weight: 500;
+        }
+        
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 60px 0;
+            gap: 40px;
+        }
+        
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
             padding: 20px;
         }
         
-        .settings {
-            background-color: #1a1a2e;
-            padding: 15px;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto 20px;
-        }
-        
-        .settings h3 {
-            margin-top: 0;
-            color: var(--neon-cyan);
-        }
-        
-        .settings-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .settings-group {
+        .hero-image {
             flex: 1;
-            min-width: 120px;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
         }
         
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #aaa;
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: perspective(1000px) rotateY(0deg);
         }
         
-        select, input[type="number"] {
+        .hero-image:hover img {
+            transform: perspective(1000px) rotateY(5deg) scale(1.03);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        
+        .sports-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin: 70px 0;
+        }
+        
+        .sport-card {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            transition: all 0.3s ease-out;
+            border-top: 3px solid transparent;
+        }
+        
+        .sport-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-top: 3px solid #000000;
+        }
+        
+        .achievements {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            margin: 70px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .achievements::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #000000, #d4af37);
+        }
+        
+        .medals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .medal-card {
+            background: #fafafa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .medal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 8px;
-            background-color: #252540;
-            border: 1px solid #333;
-            border-radius: 5px;
-            color: white;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            z-index: 1;
         }
         
-        footer {
-            margin-top: 30px;
-            color: #666;
-            text-align: center;
-            font-size: 0.9rem;
+        .medal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
         }
-
-        .generation-counter {
-            color: #aaa;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: 10px;
+        
+        .gold {
+            border-left-color: #d4af37;
+            background: linear-gradient(to right, #fffaf0, white);
         }
-
-        #generated-image::after {
+        
+        .silver {
+            border-left-color: #c0c0c0;
+            background: linear-gradient(to right, #f8f8f8, white);
+        }
+        
+        .bronze {
+            border-left-color: #cd7f32;
+            background: linear-gradient(to right, #fff8f0, white);
+        }
+        
+        .training-section {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            margin: 70px 0;
+            position: relative;
+        }
+        
+        .training-section::after {
             content: '';
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 120px;
-            height: 40px;
-            background: linear-gradient(135deg, transparent 0%, var(--bg-dark) 60%);
-            pointer-events: none;
+            width: 100px;
+            height: 100px;
+            background: url('https://cdn-icons-png.flaticon.com/512/2936/2936886.png') no-repeat;
+            background-size: contain;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        .training-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .training-quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #555;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin: 30px 0;
+            position: relative;
+            border-left: 4px solid #000000;
+        }
+        
+        .training-quote::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 4rem;
+            color: rgba(0, 0, 0, 0.1);
+            font-family: Georgia, serif;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            margin-top: 80px;
+            background: linear-gradient(to right, #fafafa, #ffffff);
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, #000000, #d4af37);
+            border-radius: 3px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .social-links a {
+            color: #666;
+            font-size: 1.8rem;
+            transition: all 0.3s;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f5f5f5;
+        }
+        
+        .social-links a:hover {
+            color: white;
+            background: #000000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #000000, #333333);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #333333, #000000);
+        }
+        
+        .contact-phone {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000;
+            margin: 15px 0;
+            display: inline-block;
+            background: #f5f5f5;
+            padding: 10px 20px;
+            border-radius: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                flex-direction: column;
+            }
+            
+            .achievements, .training-section {
+                padding: 30px;
+            }
+            
+            .contact-phone {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-
     <div class="parallax-bg"></div>
-    <div class="parallax-stars"></div>
-
-    <div id="user-menu" class="user-menu">
-        <div class="user-avatar" id="user-avatar"></div>
-        <span class="user-name" id="user-name"></span>
-        <button class="logout-btn" id="logout-btn">Выйти</button>
-    </div>
-
-    <div class="container">
-        <div class="header">
-            <h1>TBD IMAGE GENERATOR //by Dastan</h1>
-            <p>Введите описание изображения (на английском)</p>
-        </div>
-
-        <div id="auth-container" class="auth-container">
-            <div id="auth-forms">
-                <div id="login-form" class="auth-form">
-                    <h3>Вход</h3>
-                    <input type="text" id="login-username" placeholder="Логин" required>
-                    <input type="password" id="login-password" placeholder="Пароль" required minlength="6">
-                    <button id="login-btn">Войти</button>
-                    <p class="auth-switch" id="show-register">Нет аккаунта? Зарегистрироваться</p>
-                </div>
-                <div id="register-form" class="auth-form" style="display: none;">
-                    <h3>Регистрация</h3>
-                    <input type="text" id="register-username" placeholder="Придумайте логин" required>
-                    <input type="email" id="register-email" placeholder="Email" required>
-                    <input type="password" id="register-password" placeholder="Пароль (от 6 символов)" required minlength="6">
-                    <button id="register-btn">Зарегистрироваться</button>
-                    <p class="auth-switch" id="show-login">Уже есть аккаунт? Войти</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="settings">
-            <h3>Настройки генерации</h3>
-            <div class="settings-row">
-                <div class="settings-group">
-                    <label for="model">Модель</label>
-                    <select id="model">
-                        <option value="stable-diffusion-xl">SD XL (лучшее качество)</option>
-                        <option value="stable-diffusion-v1-5">SD 1.5 (базовая)</option>
-                    </select>
-                </div>
-                <div class="settings-group">
-                    <label for="steps">Шаги генерации</label>
-                    <input type="number" id="steps" value="30" min="10" max="50">
-                </div>
-                <div class="settings-group">
-                    <label for="width">Ширина</label>
-                    <input type="number" id="width" value="512" min="256" max="1024" step="64">
-                </div>
-                <div class="settings-group">
-                    <label for="height">Высота</label>
-                    <input type="number" id="height" value="512" min="256" max="1024" step="64">
-                </div>
-            </div>
-        </div>
+    
+    <div class="content">
+        <header>
+            <h1>Хушвахт Рахмихудоев</h1>
+            <div class="black-belt">Чёрный пояс по джиу-джитсу</div>
+            <p>Мастер спорта по джиу-джитсу и грепплингу, чемпион международных турниров, профессиональный тренер</p>
+        </header>
         
-        <div class="controls">
-            <div class="input-group">
-                <input type="text" id="prompt-input" placeholder="Например: cyberpunk cityscape at night, neon lights, 4k">
-                <button id="generate-btn">Создать</button>
+        <section class="hero">
+            <div class="hero-text">
+                <h2>О спортсмене и тренере</h2>
+                <p>Хушвахт Рахмихудоев - выдающийся спортсмен и тренер, обладатель чёрного пояса по бразильскому джиу-джитсу. Его профессиональная карьера отмечена победами на престижных международных турнирах.</p>
+                <p>Как тренер, Хушвахт обладает уникальной способностью раскрывать потенциал каждого ученика, создавая атмосферу, где сочетаются дисциплина, страсть к совершенству и радость от тренировочного процесса.</p>
+                <a href="#training" class="btn">Узнать о тренировках</a>
             </div>
-            <div id="generation-counter" class="generation-counter"></div>
-        </div>
-        
-        <div class="image-container">
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Генерация изображения...</p>
-                <p id="status-text">Это может занять 20-30 секунд</p>
+            <div class="hero-image">
+                <img src="https://scontent.fdyu4-1.fna.fbcdn.net/v/t1.15752-9/510780440_1800557847526221_8242405813257579876_n.png?stp=dst-png_s480x480&_nc_cat=100&ccb=1-7&_nc_sid=0024fc&_nc_ohc=VmiYMEJ0udgQ7kNvwGbw6oy&_nc_oc=Adn1oKSBTw6MfdZJyUE8a33HUQABGJd00PBF7B3pQI7olvJPKgiEFiweH_oeIp9vA-8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fdyu4-1.fna&oh=03_Q7cD2gFYK30o4yXUr3l_9ZCeDBY8lVMIZmGljlX7c9Zy-nSg0Q&oe=6885DE54" alt="Хушвахт Рахмихудоев">
             </div>
-            <img id="generated-image" alt="Сгенерированное изображение">
-            <div class="error" id="error-message"></div>
-        </div>
+        </section>
         
-        <footer>
-            Использует API TBD-API. Лимит несколько изображений в минуту
+        <section class="sports-section">
+            <div class="sport-card">
+                <h3>Джиу-Джитсу</h3>
+                <p>Бразильское джиу-джитсу - боевое искусство, основой которого является борьба в партере, а также болевые и удушающие приёмы. Это искусство позволяет эффективно противостоять более крупному и сильному противнику.</p>
+                <p>Хушвахт, как обладатель чёрного пояса, демонстрирует высочайший уровень мастерства в этом виде спорта, сочетая техничное исполнение приемов с тактическим превосходством.</p>
+            </div>
+            
+            <div class="sport-card">
+                <h3>Грепплинг</h3>
+                <p>Грепплинг - современное боевое искусство, сочетающее технику различных видов борьбы. В грепплинге разрешены практически все приемы: броски, болевые, удушения, позиционная борьба.</p>
+                <p>Хушвахт достиг выдающихся результатов в грепплинге, что подтверждается его победами на международных соревнованиях.</p>
+            </div>
+        </section>
+        
+        <section class="achievements">
+            <h2>Достижения и награды</h2>
+            <p>За свою карьеру Хушвахт Рахмихудоев завоевал множество наград на престижных соревнованиях по джиу-джитсу и грепплингу.</p>
+            
+            <div class="medals-grid">
+                <div class="medal-card gold">
+                    <h3>Многократный чемпион РТ</h3>
+                    <p>Чемпион по джиу-джитсу и грэпплингу</p>
+                    <p>Республика Таджикистан</p>
+                </div>
+                
+                <div class="medal-card gold">
+                    <h3>Чемпион Азии по джиу-джитсу</h3>
+                    <p>SJJIF, 2019</p>
+                    <p>Дели, Индия</p>
+                </div>
+                
+                <div class="medal-card silver">
+                    <h3>Чемпионат мира по джиу-джитсу</h3>
+                    <p>Серебряный призёр, AJP Tour, 2020</p>
+                    <p>Абу-Даби, ОАЭ</p>
+                </div>
+                
+                <div class="medal-card bronze">
+                    <h3>Чемпионат мира по джиу-джитсу</h3>
+                    <p>Бронзовый призёр, ACBJJ, 2021</p>
+                    <p>Москва, Россия</p>
+                </div>
+                
+                <div class="medal-card gold">
+                    <h3>Чемпион ADCC</h3>
+                    <p>2022 год</p>
+                    <p>Ташкент, Узбекистан</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="training" class="training-section">
+            <div class="training-content">
+                <h2>Тренерская работа</h2>
+                <p>Хушвахт Рахмихудоев - не только выдающийся спортсмен, но и вдохновляющий тренер, чьи тренировки оставляют незабываемые впечатления.</p>
+                
+                <div class="training-quote">
+                    "Тренировки у Хушвахта - это не просто изучение приемов, это настоящее искусство. Каждое занятие дарит непередаваемые ощущения, когда ты чувствуешь, как твои навыки и уверенность растут с каждой минутой."
+                </div>
+                
+                <h3>Особенности тренировочного процесса:</h3>
+                <ul style="margin: 25px 0 25px 40px; list-style-type: none;">
+                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Индивидуальный подход к каждому ученику</li>
+                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Уникальная атмосфера мотивации и поддержки</li>
+                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Энергичные и динамичные тренировки</li>
+                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Гармоничное развитие силы, гибкости и техники</li>
+                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Невероятный заряд энергии и позитива</li>
+                    <li style="position: relative; padding-left: 30px;">✓ Ощутимый прогресс после каждого занятия</li>
+                </ul>
+                
+                <p>Тренировки у Хушвахта - это всегда праздник спорта, где каждый, от новичка до профессионала, находит для себя что-то особенное и уходит с чувством удовлетворения и желанием вернуться снова.</p>
+                
+                <a href="#contacts" class="btn">Записаться на тренировку</a>
+            </div>
+        </section>
+        
+        <footer id="contacts">
+            <h3>Контакты</h3>
+            <p>Для сотрудничества, приглашений на турниры и записи на тренировки:</p>
+            <div class="contact-phone">+992 90 808 0055</div>
+            <p>Email: rakhmikhudoev@gmail.com</p>
+            
+            <div class="social-links">
+                <a href="https://instagram.com/khush_rakhmikhudoev/"><i class="fab fa-instagram"></i></a>
+                <a href="https://t.me/+992935151130"><i class="fab fa-telegram-plane"></i></a>
+            </div>
         </footer>
     </div>
-
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
-        
-        document.addEventListener('scroll', function() {
-            const parallaxBg = document.querySelector('.parallax-bg');
-            const scrollPosition = window.pageYOffset;
-            parallaxBg.style.transform = `translateZ(-1px) scale(2) translateY(${scrollPosition * 0.5}px)`;
+        // Улучшенный параллакс-эффект
+        document.addEventListener('mousemove', function(e) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 40;
+            const y = (e.clientY / window.innerHeight - 0.5) * 40;
+            const bg = document.querySelector('.parallax-bg');
+            bg.style.backgroundPosition = `${50 + x}% ${50 + y}%`;
         });
         
-        const promptInput = document.getElementById('prompt-input');
-        const generateBtn = document.getElementById('generate-btn');
-        const generatedImage = document.getElementById('generated-image');
-        const loadingElement = document.getElementById('loading');
-        const errorElement = document.getElementById('error-message');
-        const statusText = document.getElementById('status-text');
-        const authContainer = document.getElementById('auth-container');
-        const userMenu = document.getElementById('user-menu');
-        const userAvatar = document.getElementById('user-avatar');
-        const userName = document.getElementById('user-name');
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const showRegister = document.getElementById('show-register');
-        const showLogin = document.getElementById('show-login');
-        const loginBtn = document.getElementById('login-btn');
-        const registerBtn = document.getElementById('register-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-        const generationCounter = document.getElementById('generation-counter');
-        const loginUsername = document.getElementById('login-username');
-        const loginPassword = document.getElementById('login-password');
-        const registerUsername = document.getElementById('register-username');
-        const registerEmail = document.getElementById('register-email');
-        const registerPassword = document.getElementById('register-password');
-
-        // Переключение между формами
-        showRegister.addEventListener('click', () => {
-            loginForm.style.display = 'none';
-            registerForm.style.display = 'flex';
-        });
-
-        showLogin.addEventListener('click', () => {
-            registerForm.style.display = 'none';
-            loginForm.style.display = 'flex';
-        });
-
-        // Проверка авторизации
-        function checkAuth() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            if (user) {
-                authContainer.style.display = 'none';
-                updateUserMenu(user.username);
-                updateGenerationCounter(true);
-            } else {
-                authContainer.style.display = 'block';
-                updateUserMenu(null);
-                updateGenerationCounter(false);
-            }
-        }
-
-        // Обновление меню пользователя
-        function updateUserMenu(username) {
-            if (username) {
-                userMenu.style.display = 'flex';
-                userName.textContent = username;
-                userAvatar.textContent = username.charAt(0).toUpperCase();
-            } else {
-                userMenu.style.display = 'none';
-            }
-        }
-
-        // Вход
-        loginBtn.addEventListener('click', () => {
-            const username = loginUsername.value.trim();
-            const password = loginPassword.value.trim();
-
-            if (!username || password.length < 6) {
-                alert('Логин и пароль (от 6 символов) обязательны');
-                return;
-            }
-
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => u.username === username && u.password === password);
-
-            if (user) {
-                localStorage.setItem('currentUser', JSON.stringify({
-                    username: user.username,
-                    email: user.email
-                }));
-                checkAuth();
-                alert(`Добро пожаловать, ${user.username}!`);
-            } else {
-                alert('Неверный логин или пароль');
-            }
-        });
-
-        // Регистрация
-        registerBtn.addEventListener('click', () => {
-            const username = registerUsername.value.trim();
-            const email = registerEmail.value.trim();
-            const password = registerPassword.value.trim();
-
-            if (!username || !email || password.length < 6) {
-                alert('Все поля обязательны, пароль от 6 символов');
-                return;
-            }
-
-            if (!email.includes('@') || !email.includes('.')) {
-                alert('Введите корректный email');
-                return;
-            }
-
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            
-            if (users.some(u => u.email === email)) {
-                alert('Пользователь с таким email уже существует');
-                return;
-            }
-
-            if (users.some(u => u.username === username)) {
-                alert('Этот логин уже занят');
-                return;
-            }
-
-            const newUser = { username, email, password };
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify({
-                username,
-                email
-            }));
-            
-            checkAuth();
-            alert(`Регистрация успешна, ${username}!`);
-        });
-
-        // Выход
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('currentUser');
-            checkAuth();
-            alert('Вы вышли из аккаунта');
-        });
-
-        // Лимит генераций
-        function updateGenerationCounter(isLoggedIn) {
-            if (isLoggedIn) {
-                generationCounter.textContent = 'Вы вошли в аккаунт. Лимитов нет.';
-            } else {
-                const now = new Date().getTime();
-                const generationData = JSON.parse(localStorage.getItem('guestGenerations')) || { 
-                    count: 0, 
-                    timestamp: now 
-                };
-
-                if (now - generationData.timestamp > 3600000) {
-                    generationData.count = 0;
-                    generationData.timestamp = now;
-                    localStorage.setItem('guestGenerations', JSON.stringify(generationData));
-                }
-
-                const remaining = 10 - generationData.count;
-                generationCounter.textContent = `Гостевой лимит: ${remaining}/10 генераций в час`;
-            }
-        }
-
-        function checkGenerationLimit() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            if (user) return true;
-
-            const now = new Date().getTime();
-            let generationData = JSON.parse(localStorage.getItem('guestGenerations')) || { 
-                count: 0, 
-                timestamp: now 
-            };
-
-            if (now - generationData.timestamp > 3600000) {
-                generationData.count = 0;
-                generationData.timestamp = now;
-            }
-
-            if (generationData.count >= 10) {
-                alert('Лимит 10 генераций в час для гостей. Зарегистрируйтесь для неограниченного доступа.');
-                return false;
-            }
-
-            generationData.count++;
-            localStorage.setItem('guestGenerations', JSON.stringify(generationData));
-            updateGenerationCounter(false);
-            return true;
-        }
-
-        // Генерация изображений
-        async function generateImage() {
-            if (!checkGenerationLimit()) return;
-
-            const prompt = promptInput.value.trim();
-            if (!prompt) {
-                showError('Введите описание изображения');
-                return;
-            }
-
-            loadingElement.style.display = 'flex';
-            generatedImage.style.display = 'none';
-            errorElement.style.display = 'none';
-            generateBtn.disabled = true;
-            statusText.textContent = 'Генерация через TBD Project...';
-
-            try {
-                const proxyUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512`;
-                generatedImage.src = proxyUrl;
-                
-                await new Promise((resolve, reject) => {
-                    generatedImage.onload = resolve;
-                    generatedImage.onerror = reject;
-                    setTimeout(() => reject(new Error('Таймаут загрузки')), 30000);
+        // Плавная прокрутка для якорей
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-
-                generatedImage.style.display = 'block';
-            } catch (firstError) {
-                try {
-                    statusText.textContent = 'Пробуем альтернативный сервис...';
-                    const backupUrl = `https://api.midjourneyapi.xyz/mj/v2/image?prompt=${encodeURIComponent(prompt)}`;
-                    const response = await fetch(backupUrl);
-                    const data = await response.json();
-                    
-                    if (data.imageUrl) {
-                        generatedImage.src = data.imageUrl;
-                        generatedImage.style.display = 'block';
-                    } else {
-                        throw new Error('Сервер перегружен');
-                    }
-                } catch (secondError) {
-                    showError(`Ошибка: ${secondError.message}. Попробуйте: 
-                    1. Другой запрос (англ.)
-                    2. Подождать 1 минуту
-                    3. Обновить страницу`);
-                    console.error('Ошибки генерации:', firstError, secondError);
-                }
-            } finally {
-                loadingElement.style.display = 'none';
-                generateBtn.disabled = false;
-            }
-        }
-
-        function showError(message) {
-            loadingElement.style.display = 'none';
-            errorElement.innerHTML = message;
-            errorElement.style.display = 'block';
-        }
-
-        // Инициализация
-        generateBtn.addEventListener('click', generateImage);
-        promptInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') generateImage();
+            });
         });
-
-        promptInput.placeholder = "Например: " + [
-            "cyberpunk city at night",
-            "portrait of a beautiful elf",
-            "futuristic spaceship landing"
-        ][Math.floor(Math.random() * 3)];
-
-        checkAuth();
     </script>
 </body>
 </html>
