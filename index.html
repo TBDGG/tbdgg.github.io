@@ -17,17 +17,63 @@
             background-color: var(--bg-dark);
             color: var(--text-light);
             margin: 0;
-            padding: 20px;
+            padding: 0;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
-        
+
+        .user-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(26, 26, 46, 0.9);
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            margin-right: 5px;
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #ff5555;
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px 20px;
+        }
+
         .header {
             text-align: center;
             margin-bottom: 30px;
-            width: 100%;
         }
         
         h1 {
@@ -56,6 +102,12 @@
             gap: 15px;
         }
 
+        .auth-form h3 {
+            margin-top: 0;
+            color: var(--neon-cyan);
+            text-align: center;
+        }
+
         .auth-form input {
             padding: 12px;
             border: 2px solid #333;
@@ -73,6 +125,12 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.5);
         }
 
         .auth-switch {
@@ -80,29 +138,16 @@
             cursor: pointer;
             text-align: center;
             margin-top: 10px;
+            font-size: 0.9rem;
         }
 
-        .user-info {
-            text-align: center;
-            margin-bottom: 15px;
-            color: var(--neon-cyan);
-        }
-
-        .logout-btn {
-            background: none;
-            border: none;
-            color: #ff5555;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        
         .controls {
             display: flex;
             flex-direction: column;
             gap: 15px;
             width: 100%;
             max-width: 600px;
-            margin-bottom: 20px;
+            margin: 0 auto 20px;
         }
         
         .input-group {
@@ -204,7 +249,7 @@
             border-radius: 8px;
             width: 100%;
             max-width: 600px;
-            margin-bottom: 20px;
+            margin: 0 auto 20px;
         }
         
         .settings h3 {
@@ -266,84 +311,88 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>TBD IMAGE GENERATOR //by Dastan</h1>
-        <p>Введите описание изображения (на английском)</p>
+    <div id="user-menu" class="user-menu">
+        <div class="user-avatar" id="user-avatar"></div>
+        <span class="user-name" id="user-name"></span>
+        <button class="logout-btn" id="logout-btn">Выйти</button>
     </div>
 
-    <!-- Блок аутентификации -->
-    <div id="auth-container" class="auth-container">
-        <div id="user-info" class="user-info" style="display: none;">
-            Вы вошли как: <span id="user-email"></span>
-            <button class="logout-btn" id="logout-btn">Выйти</button>
+    <div class="container">
+        <div class="header">
+            <h1>TBD IMAGE GENERATOR //by Dastan</h1>
+            <p>Введите описание изображения (на английском)</p>
         </div>
-        <div id="auth-forms">
-            <div id="login-form" class="auth-form">
-                <h3>Вход</h3>
-                <input type="email" id="login-email" placeholder="Email" required>
-                <input type="password" id="login-password" placeholder="Пароль" required minlength="6">
-                <button id="login-btn">Войти</button>
-                <p class="auth-switch" id="show-register">Нет аккаунта? Зарегистрироваться</p>
-            </div>
-            <div id="register-form" class="auth-form" style="display: none;">
-                <h3>Регистрация</h3>
-                <input type="email" id="register-email" placeholder="Email" required>
-                <input type="password" id="register-password" placeholder="Пароль (от 6 символов)" required minlength="6">
-                <button id="register-btn">Зарегистрироваться</button>
-                <p class="auth-switch" id="show-login">Уже есть аккаунт? Войти</p>
-            </div>
-        </div>
-    </div>
 
-    <div class="settings">
-        <h3>Настройки генерации</h3>
-        <div class="settings-row">
-            <div class="settings-group">
-                <label for="model">Модель</label>
-                <select id="model">
-                    <option value="stable-diffusion-xl">SD XL (лучшее качество)</option>
-                    <option value="stable-diffusion-v1-5">SD 1.5 (базовая)</option>
-                </select>
-            </div>
-            <div class="settings-group">
-                <label for="steps">Шаги генерации</label>
-                <input type="number" id="steps" value="30" min="10" max="50">
-            </div>
-            <div class="settings-group">
-                <label for="width">Ширина</label>
-                <input type="number" id="width" value="512" min="256" max="1024" step="64">
-            </div>
-            <div class="settings-group">
-                <label for="height">Высота</label>
-                <input type="number" id="height" value="512" min="256" max="1024" step="64">
+        <div id="auth-container" class="auth-container">
+            <div id="auth-forms">
+                <div id="login-form" class="auth-form">
+                    <h3>Вход</h3>
+                    <input type="text" id="login-username" placeholder="Логин" required>
+                    <input type="password" id="login-password" placeholder="Пароль" required minlength="6">
+                    <button id="login-btn">Войти</button>
+                    <p class="auth-switch" id="show-register">Нет аккаунта? Зарегистрироваться</p>
+                </div>
+                <div id="register-form" class="auth-form" style="display: none;">
+                    <h3>Регистрация</h3>
+                    <input type="text" id="register-username" placeholder="Придумайте логин" required>
+                    <input type="email" id="register-email" placeholder="Email" required>
+                    <input type="password" id="register-password" placeholder="Пароль (от 6 символов)" required minlength="6">
+                    <button id="register-btn">Зарегистрироваться</button>
+                    <p class="auth-switch" id="show-login">Уже есть аккаунт? Войти</p>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="controls">
-        <div class="input-group">
-            <input type="text" id="prompt-input" placeholder="Например: cyberpunk cityscape at night, neon lights, 4k">
-            <button id="generate-btn">Создать</button>
+
+        <div class="settings">
+            <h3>Настройки генерации</h3>
+            <div class="settings-row">
+                <div class="settings-group">
+                    <label for="model">Модель</label>
+                    <select id="model">
+                        <option value="stable-diffusion-xl">SD XL (лучшее качество)</option>
+                        <option value="stable-diffusion-v1-5">SD 1.5 (базовая)</option>
+                    </select>
+                </div>
+                <div class="settings-group">
+                    <label for="steps">Шаги генерации</label>
+                    <input type="number" id="steps" value="30" min="10" max="50">
+                </div>
+                <div class="settings-group">
+                    <label for="width">Ширина</label>
+                    <input type="number" id="width" value="512" min="256" max="1024" step="64">
+                </div>
+                <div class="settings-group">
+                    <label for="height">Высота</label>
+                    <input type="number" id="height" value="512" min="256" max="1024" step="64">
+                </div>
+            </div>
         </div>
-        <div id="generation-counter" class="generation-counter"></div>
-    </div>
-    
-    <div class="image-container">
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Генерация изображения...</p>
-            <p id="status-text">Это может занять 20-30 секунд</p>
+        
+        <div class="controls">
+            <div class="input-group">
+                <input type="text" id="prompt-input" placeholder="Например: cyberpunk cityscape at night, neon lights, 4k">
+                <button id="generate-btn">Создать</button>
+            </div>
+            <div id="generation-counter" class="generation-counter"></div>
         </div>
-        <img id="generated-image" alt="Сгенерированное изображение">
-        <div class="error" id="error-message"></div>
+        
+        <div class="image-container">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Генерация изображения...</p>
+                <p id="status-text">Это может занять 20-30 секунд</p>
+            </div>
+            <img id="generated-image" alt="Сгенерированное изображение">
+            <div class="error" id="error-message"></div>
+        </div>
+        
+        <footer>
+            Использует API TBD-API. Лимит несколько изображений в минуту
+        </footer>
     </div>
-    
-    <footer>
-        Использует API TBD-API. Лимит несколько изображений в минуту
-    </footer>
 
     <script>
-        // ===== DOM элементы =====
+        // DOM элементы
         const promptInput = document.getElementById('prompt-input');
         const generateBtn = document.getElementById('generate-btn');
         const generatedImage = document.getElementById('generated-image');
@@ -351,8 +400,9 @@
         const errorElement = document.getElementById('error-message');
         const statusText = document.getElementById('status-text');
         const authContainer = document.getElementById('auth-container');
-        const userInfo = document.getElementById('user-info');
-        const userEmail = document.getElementById('user-email');
+        const userMenu = document.getElementById('user-menu');
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-name');
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const showRegister = document.getElementById('show-register');
@@ -361,9 +411,12 @@
         const registerBtn = document.getElementById('register-btn');
         const logoutBtn = document.getElementById('logout-btn');
         const generationCounter = document.getElementById('generation-counter');
-        const authForms = document.getElementById('auth-forms');
+        const loginUsername = document.getElementById('login-username');
+        const loginPassword = document.getElementById('login-password');
+        const registerUsername = document.getElementById('register-username');
+        const registerEmail = document.getElementById('register-email');
+        const registerPassword = document.getElementById('register-password');
 
-        // ===== Аутентификация =====
         // Переключение между формами
         showRegister.addEventListener('click', () => {
             loginForm.style.display = 'none';
@@ -377,48 +430,67 @@
 
         // Проверка авторизации
         function checkAuth() {
-            const user = JSON.parse(localStorage.getItem('user'));
+            const user = JSON.parse(localStorage.getItem('currentUser'));
             if (user) {
-                userInfo.style.display = 'block';
-                authForms.style.display = 'none';
-                userEmail.textContent = user.email;
+                authContainer.style.display = 'none';
+                updateUserMenu(user.username);
                 updateGenerationCounter(true);
             } else {
-                userInfo.style.display = 'none';
-                authForms.style.display = 'block';
+                authContainer.style.display = 'block';
+                updateUserMenu(null);
                 updateGenerationCounter(false);
+            }
+        }
+
+        // Обновление меню пользователя
+        function updateUserMenu(username) {
+            if (username) {
+                userMenu.style.display = 'flex';
+                userName.textContent = username;
+                userAvatar.textContent = username.charAt(0).toUpperCase();
+            } else {
+                userMenu.style.display = 'none';
             }
         }
 
         // Вход
         loginBtn.addEventListener('click', () => {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+            const username = loginUsername.value.trim();
+            const password = loginPassword.value.trim();
 
-            if (!email || password.length < 6) {
-                alert('Пароль должен быть от 6 символов');
+            if (!username || password.length < 6) {
+                alert('Логин и пароль (от 6 символов) обязательны');
                 return;
             }
 
             const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => u.email === email && u.password === password);
+            const user = users.find(u => u.username === username && u.password === password);
 
             if (user) {
-                localStorage.setItem('user', JSON.stringify({ email }));
+                localStorage.setItem('currentUser', JSON.stringify({
+                    username: user.username,
+                    email: user.email
+                }));
                 checkAuth();
-                alert('Вход выполнен!');
+                alert(`Добро пожаловать, ${user.username}!`);
             } else {
-                alert('Неверный email или пароль');
+                alert('Неверный логин или пароль');
             }
         });
 
         // Регистрация
         registerBtn.addEventListener('click', () => {
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
+            const username = registerUsername.value.trim();
+            const email = registerEmail.value.trim();
+            const password = registerPassword.value.trim();
 
-            if (!email || password.length < 6) {
-                alert('Пароль должен быть от 6 символов');
+            if (!username || !email || password.length < 6) {
+                alert('Все поля обязательны, пароль от 6 символов');
+                return;
+            }
+
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Введите корректный email');
                 return;
             }
 
@@ -429,29 +501,41 @@
                 return;
             }
 
-            users.push({ email, password });
+            if (users.some(u => u.username === username)) {
+                alert('Этот логин уже занят');
+                return;
+            }
+
+            const newUser = { username, email, password };
+            users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('user', JSON.stringify({ email }));
+            localStorage.setItem('currentUser', JSON.stringify({
+                username,
+                email
+            }));
+            
             checkAuth();
-            alert('Регистрация успешна!');
+            alert(`Регистрация успешна, ${username}!`);
         });
 
         // Выход
         logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('user');
+            localStorage.removeItem('currentUser');
             checkAuth();
             alert('Вы вышли из аккаунта');
         });
 
-        // ===== Лимит генераций =====
+        // Лимит генераций
         function updateGenerationCounter(isLoggedIn) {
             if (isLoggedIn) {
                 generationCounter.textContent = 'Вы вошли в аккаунт. Лимитов нет.';
             } else {
                 const now = new Date().getTime();
-                const generationData = JSON.parse(localStorage.getItem('guestGenerations')) || { count: 0, timestamp: now };
+                const generationData = JSON.parse(localStorage.getItem('guestGenerations')) || { 
+                    count: 0, 
+                    timestamp: now 
+                };
 
-                // Сброс счетчика если прошел час
                 if (now - generationData.timestamp > 3600000) {
                     generationData.count = 0;
                     generationData.timestamp = now;
@@ -464,13 +548,15 @@
         }
 
         function checkGenerationLimit() {
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (user) return true; // Для авторизованных нет лимита
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) return true;
 
             const now = new Date().getTime();
-            let generationData = JSON.parse(localStorage.getItem('guestGenerations')) || { count: 0, timestamp: now };
+            let generationData = JSON.parse(localStorage.getItem('guestGenerations')) || { 
+                count: 0, 
+                timestamp: now 
+            };
 
-            // Сброс счетчика если прошел час
             if (now - generationData.timestamp > 3600000) {
                 generationData.count = 0;
                 generationData.timestamp = now;
@@ -487,7 +573,7 @@
             return true;
         }
 
-        // ===== Генерация изображений =====
+        // Генерация изображений
         async function generateImage() {
             if (!checkGenerationLimit()) return;
 
@@ -504,7 +590,6 @@
             statusText.textContent = 'Генерация через TBD Project...';
 
             try {
-                // 1. Попробуем через быстрый сервис
                 const proxyUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512`;
                 generatedImage.src = proxyUrl;
                 
@@ -517,7 +602,6 @@
                 generatedImage.style.display = 'block';
             } catch (firstError) {
                 try {
-                    // 2. Если первый способ не сработал - пробуем резервный
                     statusText.textContent = 'Пробуем альтернативный сервис...';
                     const backupUrl = `https://api.midjourneyapi.xyz/mj/v2/image?prompt=${encodeURIComponent(prompt)}`;
                     const response = await fetch(backupUrl);
@@ -548,13 +632,12 @@
             errorElement.style.display = 'block';
         }
 
-        // ===== Инициализация =====
+        // Инициализация
         generateBtn.addEventListener('click', generateImage);
         promptInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') generateImage();
         });
 
-        // Рандомный плейсхолдер
         promptInput.placeholder = "Например: " + [
             "cyberpunk city at night",
             "portrait of a beautiful elf",
