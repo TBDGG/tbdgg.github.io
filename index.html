@@ -189,28 +189,84 @@
             text-align: center;
             font-size: 0.9rem;
         }
-        /* Удаление водяных знаков (если они в углу) */
-#generated-image {
-    position: relative;
-    overflow: hidden;
-}
-
-#generated-image::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 120px;
-    height: 40px;
-    background: linear-gradient(135deg, transparent 0%, var(--bg-dark) 60%);
-    pointer-events: none;
-}
+        
+        #generated-image {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #generated-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 120px;
+            height: 40px;
+            background: linear-gradient(135deg, transparent 0%, var(--bg-dark) 60%);
+            pointer-events: none;
+        }
+        
+        .auth-buttons {
+            margin-top: 15px;
+        }
+        
+        .auth-buttons button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .auth-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+        
+        .user-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #1a1a2e;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .user-info span {
+            color: var(--neon-cyan);
+        }
+        
+        .user-info button {
+            margin-left: 10px;
+            padding: 4px 8px;
+            background: #ff5555;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        #limit-info {
+            color: var(--neon-cyan);
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>TBD IMAGE GENERATOR //by Dastan</h1>
         <p>Введите описание изображения (на английском)</p>
+        
+        <div id="auth-buttons" class="auth-buttons">
+            <button id="login-btn">Войти</button>
+            <button id="register-btn">Регистрация</button>
+        </div>
+        
+        <div id="user-info" class="user-info" style="display: none;">
+            Привет, <span id="username-display"></span>!
+            <button id="logout-btn">Выйти</button>
+        </div>
     </div>
     
     <div class="settings">
@@ -256,90 +312,176 @@
     </div>
     
     <footer>
-        Использует API TBD-API. Лимит несколько изображений в минуту
+        Использует API TBD-API. 
+        <span id="limit-info">Лимит: <span id="remaining-generations"></span> из 5 генераций сегодня</span>
     </footer>
 
     <script>
-        const promptInput = document.getElementById('prompt-input');
-const generateBtn = document.getElementById('generate-btn');
-const generatedImage = document.getElementById('generated-image');
-const loadingElement = document.getElementById('loading');
-const errorElement = document.getElementById('error-message');
-const statusText = document.getElementById('status-text');
-
-// Новый улучшенный генератор
-async function generateImage() {
-    const prompt = promptInput.value.trim();
-    if (!prompt) {
-        showError('Введите описание изображения');
-        return;
-    }
-
-    // Показываем загрузку
-    loadingElement.style.display = 'flex';
-    generatedImage.style.display = 'none';
-    errorElement.style.display = 'none';
-    generateBtn.disabled = true;
-    statusText.textContent = 'Генерация через TBD Ptoject...';
-
-    try {
-        // 1. Попробуем через быстрый сервис
-        const proxyUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512`;
-        generatedImage.src = proxyUrl;
+        // Проверка аутентификации
+        const currentUser = localStorage.getItem('tbd-current-user');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const usernameDisplay = document.getElementById('username-display');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const limitInfo = document.getElementById('limit-info');
+        const remainingGenerations = document.getElementById('remaining-generations');
         
-        // Ждем загрузки изображения
-        await new Promise((resolve, reject) => {
-            generatedImage.onload = resolve;
-            generatedImage.onerror = reject;
-            setTimeout(() => reject(new Error('Таймаут загрузки')), 30000);
+        // Элементы генерации изображений
+        const promptInput = document.getElementById('prompt-input');
+        const generateBtn = document.getElementById('generate-btn');
+        const generatedImage = document.getElementById('generated-image');
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error-message');
+        const statusText = document.getElementById('status-text');
+        
+        // Обработчики кнопок аутентификации
+        loginBtn.addEventListener('click', () => {
+            window.location.href = 'login';
         });
-
-        generatedImage.style.display = 'block';
-    } catch (firstError) {
-        try {
-            // 2. Если первый способ не сработал - пробуем резервный
-            statusText.textContent = 'Пробуем альтернативный сервис...';
-            const backupUrl = `https://api.midjourneyapi.xyz/mj/v2/image?prompt=${encodeURIComponent(prompt)}`;
-            const response = await fetch(backupUrl);
-            const data = await response.json();
+        
+        registerBtn.addEventListener('click', () => {
+            window.location.href = 'login';
+        });
+        
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('tbd-current-user');
+            location.reload();
+        });
+        
+        // Система лимитов
+        function getDailyGenerations() {
+            const today = new Date().toDateString();
+            const generations = JSON.parse(localStorage.getItem('tbd-generations')) || {};
             
-            if (data.imageUrl) {
-                generatedImage.src = data.imageUrl;
-                generatedImage.style.display = 'block';
-            } else {
-                throw new Error('Сервер перегружен');
+            if (generations.date !== today) {
+                generations.date = today;
+                generations.count = 0;
+                generations.users = {};
+                localStorage.setItem('tbd-generations', JSON.stringify(generations));
             }
-        } catch (secondError) {
-            showError(`Ошибка: ${secondError.message}. Попробуйте: 
-            1. Другой запрос (англ.)
-            2. Подождать 1 минуту
-            3. Обновить страницу`);
-            console.error('Ошибки генерации:', firstError, secondError);
+            
+            return generations;
         }
-    } finally {
-        loadingElement.style.display = 'none';
-        generateBtn.disabled = false;
-    }
-}
-
-function showError(message) {
-    loadingElement.style.display = 'none';
-    errorElement.innerHTML = message;
-    errorElement.style.display = 'block';
-}
-
-// Обработчики событий
-generateBtn.addEventListener('click', generateImage);
-promptInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') generateImage();
-});
-
-// Первая подсказка
-promptInput.placeholder = "Например: " + [
-    "cyberpunk city at night",
-    "portrait of a beautiful elf",
-    "futuristic spaceship landing"
-][Math.floor(Math.random() * 3)];
+        
+        function canGenerate() {
+            if (currentUser) return true; // Для зарегистрированных пользователей нет лимита
+            
+            const generations = getDailyGenerations();
+            return generations.count < 5;
+        }
+        
+        function incrementGenerationCount() {
+            if (currentUser) return; // Не считаем для зарегистрированных
+            
+            const generations = getDailyGenerations();
+            generations.count = (generations.count || 0) + 1;
+            localStorage.setItem('tbd-generations', JSON.stringify(generations));
+        }
+        
+        function updateUI() {
+            if (currentUser) {
+                authButtons.style.display = 'none';
+                userInfo.style.display = 'block';
+                usernameDisplay.textContent = currentUser;
+                limitInfo.style.display = 'none';
+            } else {
+                authButtons.style.display = 'block';
+                userInfo.style.display = 'none';
+                limitInfo.style.display = 'inline';
+                
+                const generations = getDailyGenerations();
+                const remaining = 5 - (generations.count || 0);
+                remainingGenerations.textContent = remaining > 0 ? remaining : 0;
+            }
+        }
+        
+        // Обновляем интерфейс при загрузке
+        updateUI();
+        
+        // Функция генерации изображения
+        async function generateImage() {
+            if (!canGenerate()) {
+                showError('Лимит генераций исчерпан (5 в день). Зарегистрируйтесь для снятия ограничений.');
+                return;
+            }
+            
+            const prompt = promptInput.value.trim();
+            if (!prompt) {
+                showError('Введите описание изображения');
+                return;
+            }
+            
+            // Показываем загрузку
+            loadingElement.style.display = 'flex';
+            generatedImage.style.display = 'none';
+            errorElement.style.display = 'none';
+            generateBtn.disabled = true;
+            statusText.textContent = 'Генерация через TBD Project...';
+            
+            try {
+                // 1. Попробуем через быстрый сервис
+                const proxyUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512`;
+                generatedImage.src = proxyUrl;
+                
+                // Ждем загрузки изображения
+                await new Promise((resolve, reject) => {
+                    generatedImage.onload = resolve;
+                    generatedImage.onerror = reject;
+                    setTimeout(() => reject(new Error('Таймаут загрузки')), 30000);
+                });
+                
+                generatedImage.style.display = 'block';
+                incrementGenerationCount();
+                updateUI();
+            } catch (firstError) {
+                try {
+                    // 2. Если первый способ не сработал - пробуем резервный
+                    statusText.textContent = 'Пробуем альтернативный сервис...';
+                    const backupUrl = `https://api.midjourneyapi.xyz/mj/v2/image?prompt=${encodeURIComponent(prompt)}`;
+                    const response = await fetch(backupUrl);
+                    const data = await response.json();
+                    
+                    if (data.imageUrl) {
+                        generatedImage.src = data.imageUrl;
+                        generatedImage.style.display = 'block';
+                        incrementGenerationCount();
+                        updateUI();
+                    } else {
+                        throw new Error('Сервер перегружен');
+                    }
+                } catch (secondError) {
+                    showError(`Ошибка: ${secondError.message}. Попробуйте: 
+                    1. Другой запрос (англ.)
+                    2. Подождать 1 минуту
+                    3. Обновить страницу`);
+                    console.error('Ошибки генерации:', firstError, secondError);
+                }
+            } finally {
+                loadingElement.style.display = 'none';
+                generateBtn.disabled = false;
+            }
+        }
+        
+        function showError(message) {
+            loadingElement.style.display = 'none';
+            errorElement.innerHTML = message;
+            errorElement.style.display = 'block';
+        }
+        
+        // Обработчики событий
+        generateBtn.addEventListener('click', generateImage);
+        promptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') generateImage();
+        });
+        
+        // Первая подсказка
+        promptInput.placeholder = "Например: " + [
+            "cyberpunk city at night",
+            "portrait of a beautiful elf",
+            "futuristic spaceship landing"
+        ][Math.floor(Math.random() * 3)];
     </script>
 </body>
 </html>
