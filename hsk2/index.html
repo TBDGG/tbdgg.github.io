@@ -1,1 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK2 Vocabulary - Sakura Style</title>
+    <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: url('https://i.imgur.com/Jl7bsQa.jpg') no-repeat center center fixed;
+        background-size: cover;
+        margin: 0;
+        padding: 20px;
+        color: #e0e0e0;
+        min-height: 100vh;
+    }
+    .container {
+        background-color: rgba(10, 15, 30, 0.85);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 0 30px rgba(100, 150, 255, 0.3);
+        max-width: 1200px;
+        margin: 0 auto;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(100, 150, 255, 0.2);
+    }
+    .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #3a5c8a, #6495ed);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 15px rgba(100, 150, 255, 0.3);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(100, 150, 255, 0.5);
+    }
+    .back-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 25px rgba(100, 150, 255, 0.5);
+    }
+    h1 {
+        color: #6495ed;
+        text-align: center;
+        margin-top: 0;
+        font-size: 2.2em;
+        text-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+    }
+    .vocabulary-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+    .flashcard {
+        background-color: rgba(20, 30, 50, 0.7);
+        border-radius: 12px;
+        height: 180px;
+        perspective: 1000px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(100, 150, 255, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(100, 150, 255, 0.3);
+    }
+    .flashcard:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 25px rgba(100, 150, 255, 0.4);
+    }
+    .flashcard::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #3a5c8a, #6495ed);
+    }
+    .flashcard-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
+    .flashcard:hover .flashcard-inner {
+        transform: rotateY(180deg);
+    }
+    .flashcard-front, .flashcard-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    .flashcard-front {
+        background-color: rgba(30, 45, 70, 0.8);
+        color: #a8c6ff;
+        font-size: 42px;
+        font-weight: bold;
+        text-shadow: 0 0 8px rgba(100, 150, 255, 0.5);
+    }
+    .flashcard-back {
+        background: linear-gradient(135deg, #1a2035, #2a3a5a);
+        color: #e0e0e0;
+        transform: rotateY(180deg);
+        border: 1px solid rgba(100, 150, 255, 0.5);
+    }
+    .pinyin {
+        font-size: 22px;
+        margin-bottom: 10px;
+        color: #a8c6ff;
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(100, 150, 255, 0.3);
+    }
+    .translation {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+    .neon-effect {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        background: radial-gradient(circle at center, transparent 0%, rgba(10, 15, 30, 0.9) 70%);
+    }
+    @media (max-width: 768px) {
+        .vocabulary-container {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        }
+        .flashcard {
+            height: 160px;
+        }
+        .flashcard-front {
+            font-size: 36px;
+        }
+        .pinyin {
+            font-size: 18px;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="sakura-fall" id="sakura"></div>
+    
+    <div class="container">
+        <a href="/" class="back-button">← Back to HSK Levels</a>
+        <h1>🌸 HSK2 Vocabulary 🌸</h1>
+        
+        <div class="vocabulary-container">
+            <!-- 1-10 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">吧</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">ba</div>
+                        <div class="translation">(particle indicating suggestion)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">白</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">bái</div>
+                        <div class="translation">white</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">百</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">bǎi</div>
+                        <div class="translation">hundred</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">帮助</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">bāngzhù</div>
+                        <div class="translation">help</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">报纸</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">bàozhǐ</div>
+                        <div class="translation">newspaper</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">比</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">bǐ</div>
+                        <div class="translation">compare</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">别</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">bié</div>
+                        <div class="translation">don't</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">宾馆</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">bīnguǎn</div>
+                        <div class="translation">hotel</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">长</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">cháng</div>
+                        <div class="translation">long</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">唱歌</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">chànggē</div>
+                        <div class="translation">sing</div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- 11-20 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">出</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">chū</div>
+                        <div class="translation">go out</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">穿</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">chuān</div>
+                        <div class="translation">wear</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">次</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">cì</div>
+                        <div class="translation">time (occurrence)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">从</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">cóng</div>
+                        <div class="translation">from</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">错</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">cuò</div>
+                        <div class="translation">wrong</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">打篮球</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">dǎ lánqiú</div>
+                        <div class="translation">play basketball</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">大家</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">dàjiā</div>
+                        <div class="translation">everyone</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">到</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">dào</div>
+                        <div class="translation">arrive</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">得</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">de</div>
+                        <div class="translation">(structural particle)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">等</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">děng</div>
+                        <div class="translation">wait</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 21-30 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">弟弟</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">dìdi</div>
+                        <div class="translation">younger brother</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">第一</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">dì yī</div>
+                        <div class="translation">first</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">懂</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">dǒng</div>
+                        <div class="translation">understand</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">对</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">duì</div>
+                        <div class="translation">correct</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">房间</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">fángjiān</div>
+                        <div class="translation">room</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">非常</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">fēicháng</div>
+                        <div class="translation">very</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">服务员</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">fúwùyuán</div>
+                        <div class="translation">waiter, attendant</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">高</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">gāo</div>
+                        <div class="translation">tall, high</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">告诉</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">gàosu</div>
+                        <div class="translation">tell</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">哥哥</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">gēge</div>
+                        <div class="translation">older brother</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 31-40 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">给</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">gěi</div>
+                        <div class="translation">give</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">公共汽车</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">gōnggòng qìchē</div>
+                        <div class="translation">bus</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">公司</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">gōngsī</div>
+                        <div class="translation">company</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">贵</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">guì</div>
+                        <div class="translation">expensive</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">过</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">guò</div>
+                        <div class="translation">(experience particle)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">还</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">hái</div>
+                        <div class="translation">still, yet</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">孩子</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">háizi</div>
+                        <div class="translation">child</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">好吃</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">hǎochī</div>
+                        <div class="translation">delicious</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">黑</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">hēi</div>
+                        <div class="translation">black</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">红</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">hóng</div>
+                        <div class="translation">red</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 41-50 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">火车站</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">huǒchē zhàn</div>
+                        <div class="translation">train station</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">机场</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jīchǎng</div>
+                        <div class="translation">airport</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">鸡蛋</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jīdàn</div>
+                        <div class="translation">egg</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">件</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jiàn</div>
+                        <div class="translation">measure word for clothes</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">教室</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jiàoshì</div>
+                        <div class="translation">classroom</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">姐姐</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jiějie</div>
+                        <div class="translation">older sister</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">介绍</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jièshào</div>
+                        <div class="translation">introduce</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">近</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jìn</div>
+                        <div class="translation">near</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">进</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jìn</div>
+                        <div class="translation">enter</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">就</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">jiù</div>
+                        <div class="translation">then, just</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 51-60 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">觉得</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">juéde</div>
+                        <div class="translation">feel, think</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">咖啡</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">kāfēi</div>
+                        <div class="translation">coffee</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">开始</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">kāishǐ</div>
+                        <div class="translation">begin</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">考试</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">kǎoshì</div>
+                        <div class="translation">exam</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">可能</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">kěnéng</div>
+                        <div class="translation">maybe</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">可以</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">kěyǐ</div>
+                        <div class="translation">can, may</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">课</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">kè</div>
+                        <div class="translation">class, lesson</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">快</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">kuài</div>
+                        <div class="translation">fast</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">快乐</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">kuàilè</div>
+                        <div class="translation">happy</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">累</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">lèi</div>
+                        <div class="translation">tired</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 61-70 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">离</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">lí</div>
+                        <div class="translation">away from</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">两</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">liǎng</div>
+                        <div class="translation">two (for things)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">路</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">lù</div>
+                        <div class="translation">road</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">旅游</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">lǚyóu</div>
+                        <div class="translation">travel</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">卖</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">mài</div>
+                        <div class="translation">sell</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">慢</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">màn</div>
+                        <div class="translation">slow</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">忙</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">máng</div>
+                        <div class="translation">busy</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">每</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">měi</div>
+                        <div class="translation">every</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">妹妹</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">mèimei</div>
+                        <div class="translation">younger sister</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">门</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">mén</div>
+                        <div class="translation">door</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 71-80 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">面条</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">miàntiáo</div>
+                        <div class="translation">noodles</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">男</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">nán</div>
+                        <div class="translation">male</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">您</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">nín</div>
+                        <div class="translation">you (polite)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">牛奶</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">niúnǎi</div>
+                        <div class="translation">milk</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">女</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">nǚ</div>
+                        <div class="translation">female</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">旁边</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">pángbiān</div>
+                        <div class="translation">side, nearby</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">便宜</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">piányi</div>
+                        <div class="translation">cheap</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">票</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">piào</div>
+                        <div class="translation">ticket</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">妻子</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">qīzi</div>
+                        <div class="translation">wife</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">起床</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">qǐchuáng</div>
+                        <div class="translation">get up</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 81-90 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">千</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">qiān</div>
+                        <div class="translation">thousand</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">铅笔</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">qiānbǐ</div>
+                        <div class="translation">pencil</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">晴</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">qíng</div>
+                        <div class="translation">sunny</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">去年</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">qùnián</div>
+                        <div class="translation">last year</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">让</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">ràng</div>
+                        <div class="translation">let, allow</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">日</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">rì</div>
+                        <div class="translation">day, sun</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">上班</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shàngbān</div>
+                        <div class="translation">go to work</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">身体</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shēntǐ</div>
+                        <div class="translation">body</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">生病</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shēngbìng</div>
+                        <div class="translation">get sick</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">生日</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shēngrì</div>
+                        <div class="translation">birthday</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 91-100 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">时间</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shíjiān</div>
+                        <div class="translation">time</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">事情</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shìqing</div>
+                        <div class="translation">matter, affair</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">手表</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shǒubiǎo</div>
+                        <div class="translation">watch (timepiece)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">手机</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shǒujī</div>
+                        <div class="translation">mobile phone</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">说话</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">shuōhuà</div>
+                        <div class="translation">speak</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">送</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">sòng</div>
+                        <div class="translation">give, send</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">虽然</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">suīrán</div>
+                        <div class="translation">although</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">太阳</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">tàiyáng</div>
+                        <div class="translation">sun</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">糖</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">táng</div>
+                        <div class="translation">sugar, candy</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">特别</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">tèbié</div>
+                        <div class="translation">special</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 101-110 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">疼</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">téng</div>
+                        <div class="translation">painful</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">踢足球</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">tī zúqiú</div>
+                        <div class="translation">play soccer</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">题</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">tí</div>
+                        <div class="translation">problem, question</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">跳舞</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">tiàowǔ</div>
+                        <div class="translation">dance</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">外</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">wài</div>
+                        <div class="translation">outside</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">完</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">wán</div>
+                        <div class="translation">finish</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">玩</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">wán</div>
+                        <div class="translation">play</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">晚上</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">wǎnshang</div>
+                        <div class="translation">evening</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">为什么</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">wèishénme</div>
+                        <div class="translation">why</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">问</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">wèn</div>
+                        <div class="translation">ask</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 111-120 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">问题</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">wèntí</div>
+                        <div class="translation">question, problem</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">西瓜</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xīguā</div>
+                        <div class="translation">watermelon</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">希望</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xīwàng</div>
+                        <div class="translation">hope</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">洗</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xǐ</div>
+                        <div class="translation">wash</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">小时</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xiǎoshí</div>
+                        <div class="translation">hour</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">笑</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xiào</div>
+                        <div class="translation">laugh, smile</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">新</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xīn</div>
+                        <div class="translation">new</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">姓</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xìng</div>
+                        <div class="translation">surname</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">休息</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xiūxi</div>
+                        <div class="translation">rest</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">雪</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">xuě</div>
+                        <div class="translation">snow</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 121-130 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">颜色</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yánsè</div>
+                        <div class="translation">color</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">眼睛</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yǎnjing</div>
+                        <div class="translation">eye</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">羊肉</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yángròu</div>
+                        <div class="translation">lamb</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">药</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yào</div>
+                        <div class="translation">medicine</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">要</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yào</div>
+                        <div class="translation">want, need</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">也</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yě</div>
+                        <div class="translation">also</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">一起</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yìqǐ</div>
+                        <div class="translation">together</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">已经</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yǐjīng</div>
+                        <div class="translation">already</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">意思</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yìsi</div>
+                        <div class="translation">meaning</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">因为</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yīnwèi</div>
+                        <div class="translation">because</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 131-140 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">阴</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yīn</div>
+                        <div class="translation">cloudy</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">游泳</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yóuyǒng</div>
+                        <div class="translation">swim</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">右边</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yòubiān</div>
+                        <div class="translation">right side</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">鱼</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yú</div>
+                        <div class="translation">fish</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">远</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yuǎn</div>
+                        <div class="translation">far</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">运动</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">yùndòng</div>
+                        <div class="translation">exercise</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">再</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zài</div>
+                        <div class="translation">again</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">早上</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zǎoshang</div>
+                        <div class="translation">morning</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">丈夫</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zhàngfu</div>
+                        <div class="translation">husband</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">找</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zhǎo</div>
+                        <div class="translation">look for</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 141-150 -->
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">着</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zhe</div>
+                        <div class="translation">(action in progress)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">真</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zhēn</div>
+                        <div class="translation">really</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">正在</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zhèngzài</div>
+                        <div class="translation">in the process of</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">知道</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zhīdào</div>
+                        <div class="translation">know</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">准备</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zhǔnbèi</div>
+                        <div class="translation">prepare</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">自行车</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zìxíngchē</div>
+                        <div class="translation">bicycle</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">走</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zǒu</div>
+                        <div class="translation">walk</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">最</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zuì</div>
+                        <div class="translation">most</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">左边</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zuǒbiān</div>
+                        <div class="translation">left side</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flashcard">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">坐</div>
+                    <div class="flashcard-back">
+                        <div class="pinyin">zuò</div>
+                        <div class="translation">sit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sakura falling animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const sakuraContainer = document.getElementById('sakura');
+            const sakuraCount = 15;
+            
+            for (let i = 0; i < sakuraCount; i++) {
+                createSakura();
+            }
+            
+            function createSakura() {
+                const sakura = document.createElement('div');
+                sakura.innerHTML = '🌸';
+                sakura.style.position = 'absolute';
+                sakura.style.left = Math.random() * 100 + 'vw';
+                sakura.style.top = '-20px';
+                sakura.style.opacity = Math.random() * 0.5 + 0.3;
+                sakura.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                sakura.style.animation = `fall ${Math.random() * 10 + 5}s linear infinite`;
+                sakura.style.animationDelay = Math.random() * 5 + 's';
+                
+                sakuraContainer.appendChild(sakura);
+                
+                setTimeout(() => {
+                    sakura.remove();
+                    createSakura();
+                }, (Math.random() * 10000 + 10000));
+            }
+            
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fall {
+                    to {
+                        transform: translateY(100vh) rotate(360deg);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
