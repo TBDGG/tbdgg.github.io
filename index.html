@@ -3,619 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Хушвахт Рахмихудоев - мастер джиу-джитсу и грепплинга</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>TBD Image Generator</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --neon-purple: #8a2be2;
+            --neon-cyan: #00ffff;
+            --bg-dark: #0f0f1a;
+            --text-light: #f0f0f0;
         }
         
         body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.7;
-            overflow-x: hidden;
-            font-weight: 300;
-        }
-        
-        .parallax-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #e8e8e8 0%, #d8d8d8 50%, #e8e8e8 100%);
-            background-size: 200% 200%;
-            animation: gradientBG 8s ease infinite;
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Навигационное меню в одну строку */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            padding: 10px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: inline-block;
-        }
-        
-        .nav-menu {
-            display: inline-flex;
-            list-style: none;
-            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             margin: 0;
-        }
-        
-        .nav-item {
-            display: inline-block;
-        }
-        
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 10px 15px;
-            display: block;
-            transition: all 0.3s;
-        }
-        
-        .nav-link:hover {
-            color: #d4af37;
-        }
-        
-        .content {
-            max-width: 1200px;
-            margin: 0 auto;
             padding: 20px;
-            margin-top: 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
-        header {
+        .header {
             text-align: center;
-            padding: 60px 0 50px;
-            position: relative;
-        }
-        
-        header::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, #000000, #d4af37);
-            margin: 30px auto;
-            border-radius: 2px;
-        }
-        
-        .black-belt {
-            display: inline-block;
-            background-color: #000;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin: 10px 0;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            margin-bottom: 30px;
+            width: 100%;
         }
         
         h1 {
             font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #222;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
         }
         
-        @media (min-width: 768px) {
-            h1 {
-                font-size: 3.2rem;
-            }
-        }
-        
-        h2 {
-            font-size: 2rem;
-            margin: 50px 0 25px;
-            color: #333;
-            font-weight: 600;
-        }
-        
-        @media (min-width: 768px) {
-            h2 {
-                font-size: 2.2rem;
-            }
-        }
-        
-        h3 {
-            font-size: 1.5rem;
-            margin: 35px 0 20px;
-            color: #444;
-            font-weight: 500;
-        }
-        
-        @media (min-width: 768px) {
-            h3 {
-                font-size: 1.6rem;
-            }
-        }
-        
-        .hero {
+        .controls {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            margin: 60px 0;
-            gap: 40px;
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
         }
         
-        @media (min-width: 768px) {
-            .hero {
-                flex-direction: row;
-                justify-content: space-around;
-                flex-wrap: wrap;
-            }
+        .input-group {
+            display: flex;
+            gap: 10px;
         }
         
-        .hero-text {
+        #prompt-input {
             flex: 1;
-            min-width: 300px;
+            padding: 12px 15px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background-color: #1a1a2e;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        #prompt-input:focus {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 15px var(--neon-purple);
+        }
+        
+        #generate-btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        #generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(138, 43, 226, 0.6);
+        }
+        
+        #generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .image-container {
+            position: relative;
+            width: 90%;
+            max-width: 512px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.3);
+            border: 1px solid #333;
+            min-height: 512px;
+            background-color: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #generated-image {
+            max-width: 100%;
+            max-height: 512px;
+            display: none;
+            border-radius: 8px;
+        }
+        
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--neon-purple);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error {
+            color: #ff5555;
+            text-align: center;
             padding: 20px;
         }
         
-        .hero-image {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform: perspective(1000px) rotateY(0deg);
-        }
-        
-        .hero-image:hover img {
-            transform: perspective(1000px) rotateY(5deg) scale(1.03);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-        }
-        
-        .sports-section {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            margin: 70px 0;
-        }
-        
-        @media (min-width: 768px) {
-            .sports-section {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-        }
-        
-        .sport-card {
-            flex: 1;
-            min-width: 300px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-            transition: all 0.3s ease-out;
-            border-top: 3px solid transparent;
-        }
-        
-        @media (min-width: 768px) {
-            .sport-card {
-                padding: 35px;
-            }
-        }
-        
-        .sport-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-top: 3px solid #000000;
-        }
-        
-        .achievements {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-            margin: 70px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        @media (min-width: 768px) {
-            .achievements {
-                padding: 50px;
-            }
-        }
-        
-        .achievements::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(to bottom, #000000, #d4af37);
-        }
-        
-        .medals-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        @media (min-width: 768px) {
-            .medals-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
-        }
-        
-        .medal-card {
-            background: #fafafa;
-            padding: 25px;
-            border-radius: 10px;
-            border-left: 4px solid;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .medal-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .settings {
+            background-color: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-            z-index: 1;
+            max-width: 600px;
+            margin-bottom: 20px;
         }
         
-        .medal-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        .settings h3 {
+            margin-top: 0;
+            color: var(--neon-cyan);
         }
         
-        .gold {
-            border-left-color: #d4af37;
-            background: linear-gradient(to right, #fffaf0, white);
+        .settings-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
         }
         
-        .silver {
-            border-left-color: #c0c0c0;
-            background: linear-gradient(to right, #f8f8f8, white);
+        .settings-group {
+            flex: 1;
+            min-width: 120px;
         }
         
-        .bronze {
-            border-left-color: #cd7f32;
-            background: linear-gradient(to right, #fff8f0, white);
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #aaa;
         }
         
-        .training-section {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-            margin: 70px 0;
-            position: relative;
-        }
-        
-        @media (min-width: 768px) {
-            .training-section {
-                padding: 50px;
-            }
-        }
-        
-        .training-section::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: url('https://cdn-icons-png.flaticon.com/512/2936/2936886.png') no-repeat;
-            background-size: contain;
-            opacity: 0.05;
-            z-index: 0;
-        }
-        
-        .training-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .training-quote {
-            font-style: italic;
-            font-size: 1.2rem;
-            color: #555;
-            padding: 30px;
-            background: #f9f9f9;
-            border-radius: 10px;
-            margin: 30px 0;
-            position: relative;
-            border-left: 4px solid #000000;
-        }
-        
-        .training-quote::before {
-            content: '"';
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            font-size: 4rem;
-            color: rgba(0, 0, 0, 0.1);
-            font-family: Georgia, serif;
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            background-color: #252540;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: white;
         }
         
         footer {
-            text-align: center;
-            padding: 60px 0;
-            margin-top: 80px;
-            background: linear-gradient(to right, #fafafa, #ffffff);
-            border-radius: 15px;
-            position: relative;
-        }
-        
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 3px;
-            background: linear-gradient(to right, #000000, #d4af37);
-            border-radius: 3px;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
             margin-top: 30px;
-        }
-        
-        .social-links a {
             color: #666;
-            font-size: 1.8rem;
-            transition: all 0.3s;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #f5f5f5;
+            text-align: center;
+            font-size: 0.9rem;
         }
-        
-        .social-links a:hover {
-            color: white;
-            background: #000000;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(to right, #000000, #333333);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            margin-top: 20px;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(to right, #333333, #000000);
-        }
-        
-        .contact-phone {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #000;
-            margin: 15px 0;
-            display: inline-block;
-            background: #f5f5f5;
-            padding: 10px 20px;
-            border-radius: 50px;
-        }
-        
-        @media (min-width: 768px) {
-            .contact-phone {
-                font-size: 1.5rem;
-            }
-        }
+        /* Удаление водяных знаков (если они в углу) */
+#generated-image {
+    position: relative;
+    overflow: hidden;
+}
+
+#generated-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 120px;
+    height: 40px;
+    background: linear-gradient(135deg, transparent 0%, var(--bg-dark) 60%);
+    pointer-events: none;
+}
     </style>
 </head>
 <body>
-    <div class="parallax-bg"></div>
-    
-    <!-- Навигационное меню в одну строку -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#about" class="nav-link">Обо мне</a></li>
-                <li class="nav-item"><a href="#sports" class="nav-link">Виды спорта</a></li>
-                <li class="nav-item"><a href="#achievements" class="nav-link">Достижения</a></li>
-                <li class="nav-item"><a href="#training" class="nav-link">Тренировки</a></li>
-                <li class="nav-item"><a href="#contacts" class="nav-link">Контакты</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <div class="content">
-        <header id="about">
-            <h1>Хушвахт Рахмихудоев</h1>
-            <div class="black-belt">Чёрный пояс по джиу-джитсу</div>
-            <p>Мастер спорта по джиу-джитсу и грепплингу, чемпион международных турниров, профессиональный тренер</p>
-        </header>
-        
-        <section class="hero">
-            <div class="hero-text">
-                <h2>О спортсмене и тренере</h2>
-                <p>Хушвахт Рахмихудоев - спортсмен и тренер, обладатель чёрного пояса по бразильскому джиу-джитсу. Его профессиональная карьера отмечена победами на престижных международных турнирах.</p>
-                <p>Как тренер, Хушвахт обладает уникальной способностью раскрывать потенциал каждого ученика, создавая атмосферу, где сочетаются дисциплина, страсть к совершенству и радость от тренировочного процесса.</p>
-                <a href="#training" class="btn">Узнать о тренировках</a>
-            </div>
-            <div class="hero-image">
-                <img src="https://scontent.fdyu4-1.fna.fbcdn.net/v/t1.15752-9/510780440_1800557847526221_8242405813257579876_n.png?stp=dst-png_s480x480&_nc_cat=100&ccb=1-7&_nc_sid=0024fc&_nc_ohc=VmiYMEJ0udgQ7kNvwGbw6oy&_nc_oc=Adn1oKSBTw6MfdZJyUE8a33HUQABGJd00PBF7B3pQI7olvJPKgiEFiweH_oeIp9vA-8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fdyu4-1.fna&oh=03_Q7cD2gFYK30o4yXUr3l_9ZCeDBY8lVMIZmGljlX7c9Zy-nSg0Q&oe=6885DE54" alt="Хушвахт Рахмихудоев">
-            </div>
-        </section>
-        
-        <section class="sports-section" id="sports">
-            <div class="sport-card">
-                <h3>Джиу-Джитсу</h3>
-                <p>Бразильское джиу-джитсу - боевое искусство, основой которого является борьба в партере, а также болевые и удушающие приёмы. Это искусство позволяет эффективно противостоять более крупному и сильному противнику.</p>
-                <p>Хушвахт, как обладатель чёрного пояса, демонстрирует высочайший уровень мастерства в этом виде спорта, сочетая техничное исполнение приемов с тактическим превосходством.</p>
-            </div>
-            
-            <div class="sport-card">
-                <h3>Грепплинг</h3>
-                <p>Грепплинг - современное боевое искусство, сочетающее технику различных видов борьбы. В грепплинге разрешены практически все приемы: броски, болевые, удушения, позиционная борьба.</p>
-                <p>Хушвахт достиг выдающихся результатов в грепплинге, что подтверждается его победами на международных соревнованиях.</p>
-            </div>
-        </section>
-        
-        <section class="achievements" id="achievements">
-            <h2>Достижения и награды</h2>
-            <p>За свою карьеру Хушвахт Рахмихудоев завоевал множество наград на престижных соревнованиях по джиу-джитсу и грепплингу.</p>
-            
-            <div class="medals-grid">
-                <div class="medal-card gold">
-                    <h3>Многократный чемпион РТ</h3>
-                    <p>Чемпион по джиу-джитсу и грэпплингу</p>
-                    <p>Республика Таджикистан</p>
-                </div>
-                
-                <div class="medal-card gold">
-                    <h3>Чемпион Азии по джиу-джитсу</h3>
-                    <p>SJJIF, 2019</p>
-                    <p>Дели, Индия</p>
-                </div>
-                
-                <div class="medal-card silver">
-                    <h3>Чемпионат мира по джиу-джитсу</h3>
-                    <p>Серебряный призёр, AJP Tour, 2020</p>
-                    <p>Абу-Даби, ОАЭ</p>
-                </div>
-                
-                <div class="medal-card bronze">
-                    <h3>Чемпионат мира по джиу-джитсу</h3>
-                    <p>Бронзовый призёр, ACBJJ, 2021</p>
-                    <p>Москва, Россия</p>
-                </div>
-                
-                <div class="medal-card gold">
-                    <h3>Чемпион ADCC</h3>
-                    <p>2022 год</p>
-                    <p>Ташкент, Узбекистан</p>
-                </div>
-            </div>
-        </section>
-        
-        <section id="training" class="training-section">
-            <div class="training-content">
-                <h2>Тренерская работа</h2>
-                <p>Хушвахт Рахмихудоев - не только выдающийся спортсмен, но и вдохновляющий тренер, чьи тренировки оставляют незабываемые впечатления.</p>
-                
-                <div class="training-quote">
-                    "Тренировки у Хушвахта - это не просто изучение приемов, это настоящее искусство. Каждое занятие дарит непередаваемые ощущения, когда ты чувствуешь, как твои навыки и уверенность растут с каждой минутой."
-                </div>
-                
-                <h3>Особенности тренировочного процесса:</h3>
-                <ul style="margin: 25px 0 25px 40px; list-style-type: none;">
-                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Индивидуальный подход к каждому ученику</li>
-                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Уникальная атмосфера мотивации и поддержки</li>
-                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Энергичные и динамичные тренировки</li>
-                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Гармоничное развитие силы, гибкости и техники</li>
-                    <li style="margin-bottom: 15px; position: relative; padding-left: 30px;">✓ Невероятный заряд энергии и позитива</li>
-                    <li style="position: relative; padding-left: 30px;">✓ Ощутимый прогресс после каждого занятия</li>
-                </ul>
-                
-                <p>Тренировки у Хушвахта - это всегда праздник спорта, где каждый, от новичка до профессионала, находит для себя что-то особенное и уходит с чувством удовлетворения и желанием вернуться снова.</p>
-                
-                <a href="#contacts" class="btn">Записаться на тренировку</a>
-            </div>
-        </section>
-        
-        <footer id="contacts">
-            <h3>Контакты</h3>
-            <p>Для сотрудничества, приглашений на турниры и записи на тренировки:</p>
-            <div class="contact-phone">+992 90 808 0055</div>
-            <p>Email: rakhmikhudoev@gmail.com</p>
-            
-            <div class="social-links">
-                <a href="https://instagram.com/khush_rakhmikhudoev/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://t.me/+992935151130" target="_blank"><i class="fab fa-telegram"></i></a>
-            </div>
-        </footer>
+    <div class="header">
+        <h1>TBD IMAGE GENERATOR //by Dastan</h1>
+        <p>Введите описание изображения (на английском)</p>
     </div>
     
+    <div class="settings">
+        <h3>Настройки генерации</h3>
+        <div class="settings-row">
+            <div class="settings-group">
+                <label for="model">Модель</label>
+                <select id="model">
+                    <option value="stable-diffusion-xl">SD XL (лучшее качество)</option>
+                    <option value="stable-diffusion-v1-5">SD 1.5 (базовая)</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <label for="steps">Шаги генерации</label>
+                <input type="number" id="steps" value="30" min="10" max="50">
+            </div>
+            <div class="settings-group">
+                <label for="width">Ширина</label>
+                <input type="number" id="width" value="512" min="256" max="1024" step="64">
+            </div>
+            <div class="settings-group">
+                <label for="height">Высота</label>
+                <input type="number" id="height" value="512" min="256" max="1024" step="64">
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <div class="input-group">
+            <input type="text" id="prompt-input" placeholder="Например: cyberpunk cityscape at night, neon lights, 4k">
+            <button id="generate-btn">Создать</button>
+        </div>
+    </div>
+    
+    <div class="image-container">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Генерация изображения...</p>
+            <p id="status-text">Это может занять 20-30 секунд</p>
+        </div>
+        <img id="generated-image" alt="Сгенерированное изображение">
+        <div class="error" id="error-message"></div>
+    </div>
+    
+    <footer>
+        Использует API TBD-API. Лимит несколько изображений в минуту
+    </footer>
+
     <script>
-        // Улучшенный параллакс-эффект
-        document.addEventListener('mousemove', function(e) {
-            const x = (e.clientX / window.innerWidth - 0.5) * 40;
-            const y = (e.clientY / window.innerHeight - 0.5) * 40;
-            const bg = document.querySelector('.parallax-bg');
-            bg.style.backgroundPosition = `${50 + x}% ${50 + y}%`;
-        });
+        const promptInput = document.getElementById('prompt-input');
+const generateBtn = document.getElementById('generate-btn');
+const generatedImage = document.getElementById('generated-image');
+const loadingElement = document.getElementById('loading');
+const errorElement = document.getElementById('error-message');
+const statusText = document.getElementById('status-text');
+
+// Новый улучшенный генератор
+async function generateImage() {
+    const prompt = promptInput.value.trim();
+    if (!prompt) {
+        showError('Введите описание изображения');
+        return;
+    }
+
+    // Показываем загрузку
+    loadingElement.style.display = 'flex';
+    generatedImage.style.display = 'none';
+    errorElement.style.display = 'none';
+    generateBtn.disabled = true;
+    statusText.textContent = 'Генерация через TBD Ptoject...';
+
+    try {
+        // 1. Попробуем через быстрый сервис
+        const proxyUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512`;
+        generatedImage.src = proxyUrl;
         
-        // Плавная прокрутка для якорей
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+        // Ждем загрузки изображения
+        await new Promise((resolve, reject) => {
+            generatedImage.onload = resolve;
+            generatedImage.onerror = reject;
+            setTimeout(() => reject(new Error('Таймаут загрузки')), 30000);
         });
-        
-        // Фиксация меню при скролле
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
-                navbar.style.padding = '10px 0';
+
+        generatedImage.style.display = 'block';
+    } catch (firstError) {
+        try {
+            // 2. Если первый способ не сработал - пробуем резервный
+            statusText.textContent = 'Пробуем альтернативный сервис...';
+            const backupUrl = `https://api.midjourneyapi.xyz/mj/v2/image?prompt=${encodeURIComponent(prompt)}`;
+            const response = await fetch(backupUrl);
+            const data = await response.json();
+            
+            if (data.imageUrl) {
+                generatedImage.src = data.imageUrl;
+                generatedImage.style.display = 'block';
             } else {
-                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
-                navbar.style.padding = '15px 0';
+                throw new Error('Сервер перегружен');
             }
-        });
+        } catch (secondError) {
+            showError(`Ошибка: ${secondError.message}. Попробуйте: 
+            1. Другой запрос (англ.)
+            2. Подождать 1 минуту
+            3. Обновить страницу`);
+            console.error('Ошибки генерации:', firstError, secondError);
+        }
+    } finally {
+        loadingElement.style.display = 'none';
+        generateBtn.disabled = false;
+    }
+}
+
+function showError(message) {
+    loadingElement.style.display = 'none';
+    errorElement.innerHTML = message;
+    errorElement.style.display = 'block';
+}
+
+// Обработчики событий
+generateBtn.addEventListener('click', generateImage);
+promptInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') generateImage();
+});
+
+// Первая подсказка
+promptInput.placeholder = "Например: " + [
+    "cyberpunk city at night",
+    "portrait of a beautiful elf",
+    "futuristic spaceship landing"
+][Math.floor(Math.random() * 3)];
     </script>
 </body>
 </html>
