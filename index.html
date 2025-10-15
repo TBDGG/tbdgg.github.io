@@ -3,147 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wexer Games - Оффлайн игровая платформа</title>
+    <title>Wexer Games - Игровая платформа</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Дополнительные исправления */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="nav-brand">
-                <h1>Wexer Games</h1>
-            </div>
-            <div class="nav-links">
-                <a href="index.html">Главная</a>
-                <a href="#games">Игры</a>
-                <a href="#shop">Магазин</a>
-                <div class="user-section">
-                    <span id="userInfo" style="display: none;">
-                        <img id="userAvatar" src="" alt="Аватар" class="avatar-small">
-                        <span id="userName"></span> | 
-                        <span id="userCoins">0</span> WCoins
-                        <button onclick="logout()" class="btn-logout">Выйти</button>
-                    </span>
-                    <span id="guestSection">
-                        <a href="login.html" class="btn-login">Войти</a>
-                        <a href="reg.html" class="btn-reg">Регистрация</a>
-                    </span>
+    <div class="container">
+        <header>
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h1>Wexer Games</h1>
                 </div>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h2>Добро пожаловать в Wexer Games</h2>
-                <p>Играйте в увлекательные игры против ИИ с различными уровнями сложности</p>
-                <div class="hero-buttons">
-                    <button class="btn-primary" onclick="scrollToGames()">Начать играть</button>
-                    <button class="btn-secondary" onclick="showFeatureInfo()">Особенности</button>
-                </div>
-            </div>
-            <div class="hero-features" id="featureInfo" style="display: none;">
-                <div class="feature">
-                    <h3>🎮 5 Уникальных Игр</h3>
-                    <p>Все игры начинаются на W и имеют уникальный геймплей</p>
-                </div>
-                <div class="feature">
-                    <h3>🤖 Умные Боты</h3>
-                    <p>10 уровней сложности для каждого режима</p>
-                </div>
-                <div class="feature">
-                    <h3>🪙 WCoins Система</h3>
-                    <p>Зарабатывайте монеты и покупайте украшения</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="games" class="games-section">
-            <h2>Наши игры</h2>
-            <div class="games-grid">
-                <div class="game-card" onclick="openGame('wchess')">
-                    <div class="game-icon">♔</div>
-                    <h3>WChess</h3>
-                    <p>Классические шахматы с ИИ противником</p>
-                    <div class="game-info">
-                        <span class="difficulty">Сложность: 1-10</span>
-                        <span class="coins-reward">Награда: 50 WCoins</span>
+                <div class="nav-links">
+                    <a href="#home">Главная</a>
+                    <a href="#games">Игры</a>
+                    <a href="#shop">Магазин</a>
+                    <div class="user-section">
+                        <span id="userInfo" style="display: none;">
+                            <span id="userName"></span> | 
+                            <span id="userCoins">0</span> WCoins
+                            <button onclick="logout()" class="btn-logout">Выйти</button>
+                        </span>
+                        <span id="guestSection">
+                            <a href="login.html" class="btn-login">Войти</a>
+                            <a href="reg.html" class="btn-reg">Регистрация</a>
+                        </span>
                     </div>
                 </div>
+            </nav>
+        </header>
 
-                <div class="game-card" onclick="openGame('wsnake')">
-                    <div class="game-icon">🐍</div>
-                    <h3>WSnake</h3>
-                    <p>Классическая змейка с улучшенной графикой</p>
-                    <div class="game-info">
-                        <span class="difficulty">Сложность: 1-10</span>
-                        <span class="coins-reward">Награда: 30 WCoins</span>
+        <main>
+            <!-- Герой секция -->
+            <section id="home" class="hero">
+                <div class="hero-content">
+                    <h2>Добро пожаловать в Wexer Games</h2>
+                    <p>Играйте в увлекательные игры против ИИ с различными уровнями сложности</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="scrollToGames()">Начать играть</button>
+                        <button class="btn-secondary" onclick="showFeatureInfo()">Особенности</button>
                     </div>
                 </div>
+            </section>
 
-                <div class="game-card" onclick="openGame('wtetris')">
-                    <div class="game-icon">◼️</div>
-                    <h3>WTetris</h3>
-                    <p>Тетрис в космическом стиле</p>
-                    <div class="game-info">
-                        <span class="difficulty">Сложность: 1-10</span>
-                        <span class="coins-reward">Награда: 40 WCoins</span>
+            <!-- Игры -->
+            <section id="games" class="games-section">
+                <h2>Наши игры</h2>
+                <div class="games-grid">
+                    <!-- WChess -->
+                    <div class="game-card" onclick="openGame('wchess')">
+                        <div class="game-icon">♔</div>
+                        <h3>WChess</h3>
+                        <p>Классические шахматы с ИИ противником</p>
+                        <div class="game-info">
+                            <span class="difficulty">Сложность: 1-10</span>
+                            <span class="coins-reward">Награда: 50 WCoins</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="game-card" onclick="openGame('wpacman')">
-                    <div class="game-icon">👻</div>
-                    <h3>WPacman</h3>
-                    <p>Пакмен с умными призраками</p>
-                    <div class="game-info">
-                        <span class="difficulty">Сложность: 1-10</span>
-                        <span class="coins-reward">Награда: 35 WCoins</span>
+                    <!-- WSnake -->
+                    <div class="game-card" onclick="openGame('wsnake')">
+                        <div class="game-icon">🐍</div>
+                        <h3>WSnake</h3>
+                        <p>Классическая змейка с улучшенной графикой</p>
+                        <div class="game-info">
+                            <span class="difficulty">Сложность: 1-10</span>
+                            <span class="coins-reward">Награда: 30 WCoins</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="game-card" onclick="openGame('wmemory')">
-                    <div class="game-icon">🧠</div>
-                    <h3>WMemory</h3>
-                    <p>Игра на память с космическими картами</p>
-                    <div class="game-info">
-                        <span class="difficulty">Сложность: 1-10</span>
-                        <span class="coins-reward">Награда: 25 WCoins</span>
+                    <!-- WTetris -->
+                    <div class="game-card" onclick="openGame('wtetris')">
+                        <div class="game-icon">◼️</div>
+                        <h3>WTetris</h3>
+                        <p>Тетрис в космическом стиле</p>
+                        <div class="game-info">
+                            <span class="difficulty">Сложность: 1-10</span>
+                            <span class="coins-reward">Награда: 40 WCoins</span>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="shop" class="shop-section">
-            <h2>Магазин WCoins</h2>
-            <div class="shop-container">
-                <div class="shop-category">
-                    <h3>🖼️ Смена аватара</h3>
-                    <div class="shop-items">
-                        <div class="shop-item" onclick="buyAvatarChange()">
-                            <div class="item-icon">👤</div>
-                            <h4>Смена аватара</h4>
-                            <p>Измените ваш аватар</p>
-                            <div class="item-price">100 WCoins</div>
+                    <!-- WPacman -->
+                    <div class="game-card" onclick="openGame('wpacman')">
+                        <div class="game-icon">👻</div>
+                        <h3>WPacman</h3>
+                        <p>Пакмен с умными призраками</p>
+                        <div class="game-info">
+                            <span class="difficulty">Сложность: 1-10</span>
+                            <span class="coins-reward">Награда: 35 WCoins</span>
+                        </div>
+                    </div>
+
+                    <!-- WMemory -->
+                    <div class="game-card" onclick="openGame('wmemory')">
+                        <div class="game-icon">🧠</div>
+                        <h3>WMemory</h3>
+                        <p>Игра на память с космическими картами</p>
+                        <div class="game-info">
+                            <span class="difficulty">Сложность: 1-10</span>
+                            <span class="coins-reward">Награда: 25 WCoins</span>
                         </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="shop-category">
-                    <h3>✨ Украшения аватара</h3>
-                    <div class="shop-items-grid" id="decorationsGrid">
-                        <!-- Украшения будут загружены через JS -->
-                    </div>
+            <!-- Магазин -->
+            <section id="shop" class="shop-section">
+                <h2>Магазин WCoins</h2>
+                <div class="shop-notice">
+                    <p>Магазин будет доступен после регистрации и входа в систему</p>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
+        </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 Wexer Games. Все права защищены.</p>
-            <p class="small-text">Проект Wexer</p>
-        </div>
-    </footer>
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2024 Wexer Games. Все права защищены.</p>
+                <p class="small-text">Проект Wexer</p>
+            </div>
+        </footer>
+    </div>
 
     <script src="js/main.js"></script>
 </body>
