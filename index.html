@@ -3,319 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wexer Games - Космические игры</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Wexer Games - Космические приключения начинаются здесь!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a, #2d1b69);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        /* Неоновые эффекты */
+        .neon-text {
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+        }
+
+        .neon-border {
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, inset 0 0 10px #ff00ff;
+        }
+
+        /* Шапка */
+        header {
+            background: rgba(10, 10, 40, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 2px solid #00ffff;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #ff00ff;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Основной контент */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #00ffff;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #00ffff;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        .feature-card h3 {
+            color: #ff00ff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Секция с играми */
+        .games-section {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .games-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #00ffff;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-decoration: none;
+            color: white;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            border-color: #ff00ff;
+            box-shadow: 0 0 25px #ff00ff;
+            transform: scale(1.05);
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            color: #00ffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-description {
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+        /* Подвал */
+        footer {
+            background: rgba(10, 10, 40, 0.9);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid #00ffff;
+        }
+
+        .company-info {
+            font-size: 0.8rem;
+            color: #888;
+            line-height: 1.4;
+        }
+
+        /* Звездный фон */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Анимированный космический фон -->
-    <div class="space-bg">
-        <div class="stars"></div>
-        <div class="stars2"></div>
-        <div class="stars3"></div>
-        <div class="nebula"></div>
-    </div>
+    <!-- Звездный фон -->
+    <div class="stars" id="stars"></div>
 
-    <div class="container">
-        <!-- Хедер -->
-        <header class="header">
-            <nav class="navbar">
-                <div class="nav-brand">
-                    <div class="logo">
-                        <span class="logo-icon">🚀</span>
-                        <span class="logo-text">WEXER GAMES</span>
-                    </div>
-                </div>
-                
-                <div class="nav-menu">
-                    <a href="#home" class="nav-link active">ГЛАВНАЯ</a>
-                    <a href="#games" class="nav-link">ИГРЫ</a>
-                    <a href="#shop" class="nav-link">МАГАЗИН</a>
-                </div>
+    <!-- Шапка -->
+    <header>
+        <div class="logo neon-text">WEXER GAMES</div>
+        <p class="tagline">Погрузись в космические приключения! Играй, соревнуйся, становись легендой галактики!</p>
+    </header>
 
-                <div class="user-panel">
-                    <div id="userInfo" class="user-info">
-                        <div class="user-avatar">
-                            <div class="avatar-placeholder">👤</div>
-                        </div>
-                        <div class="user-data">
-                            <span class="username" id="userName">Player</span>
-                            <div class="coins-display">
-                                <span class="coins-icon">🪙</span>
-                                <span id="userCoins" class="coins-amount">1000</span>
-                            </div>
-                        </div>
-                        <button class="logout-btn" onclick="logout()">🚪</button>
-                    </div>
-                    
-                    <div id="guestSection" class="auth-buttons">
-                        <a href="login.html" class="btn-login">
-                            <span class="btn-icon">🔐</span>
-                            ВОЙТИ
-                        </a>
-                        <a href="reg.html" class="btn-register">
-                            <span class="btn-icon">⭐</span>
-                            РЕГИСТРАЦИЯ
-                        </a>
-                    </div>
+    <!-- Основной контент -->
+    <main>
+        <section class="hero">
+            <h1 class="neon-text">Добро пожаловать в будущее игр!</h1>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>🎮 Играй в лучшие игры</h3>
+                    <p>У нас собраны самые захватывающие космические игры всех времен</p>
                 </div>
-            </nav>
-        </header>
-
-        <!-- Главный герой-секция -->
-        <section id="home" class="hero-section">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-text">КОСМИЧЕСКИЕ ИГРЫ</span>
+                <div class="feature-card">
+                    <h3>🏆 Войди в топ игроков</h3>
+                    <p>Соревнуйся с игроками со всей галактики и докажи свое мастерство</p>
                 </div>
-                <h1 class="hero-title">
-                    <span class="title-line">WEXER</span>
-                    <span class="title-line accent">GAMES</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Погрузитесь в мир космических приключений с искусственным интеллектом. 
-                    10 уровней сложности, уникальные игры и система наград!
-                </p>
-                
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">УНИКАЛЬНЫХ ИГР</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">10</div>
-                        <div class="stat-label">УРОВНЕЙ СЛОЖНОСТИ</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">∞</div>
-                        <div class="stat-label">ВОЗМОЖНОСТЕЙ</div>
-                    </div>
-                </div>
-
-                <div class="hero-actions">
-                    <button class="btn-primary" onclick="scrollToGames()">
-                        <span class="btn-glow"></span>
-                        <span class="btn-text">🚀 НАЧАТЬ ИГРАТЬ</span>
-                    </button>
-                    <button class="btn-secondary" onclick="showFeatures()">
-                        <span class="btn-text">✨ ОСОБЕННОСТИ</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="hero-visual">
-                <div class="floating-game-cards">
-                    <div class="game-preview chess">♔</div>
-                    <div class="game-preview snake">🐍</div>
-                    <div class="game-preview tetris">◼️</div>
+                <div class="feature-card">
+                    <h3>🚀 Постоянные обновления</h3>
+                    <p>Новые игры и функции добавляются регулярно</p>
                 </div>
             </div>
         </section>
 
-        <!-- Секция игр -->
-        <section id="games" class="games-section">
-            <div class="section-header">
-                <h2 class="section-title">КОСМИЧЕСКИЕ ИГРЫ</h2>
-                <div class="section-subtitle">Выберите свою следующую битву с ИИ</div>
-            </div>
-
+        <!-- Секция с играми -->
+        <section class="games-section">
+            <h2 class="neon-text">Выбери свою игру</h2>
             <div class="games-grid">
-                <!-- WChess -->
-                <div class="game-card" onclick="openGame('wchess')">
-                    <div class="game-card-inner">
-                        <div class="game-header">
-                            <div class="game-icon chess-icon">♔</div>
-                            <div class="game-badge">НОВАЯ</div>
-                        </div>
-                        <h3 class="game-title">WCHESS</h3>
-                        <p class="game-description">
-                            Классические шахматы с продвинутым ИИ. 
-                            Брось вызов космическому разуму!
-                        </p>
-                        <div class="game-features">
-                            <div class="feature">
-                                <span class="feature-icon">🎯</span>
-                                Сложность: 1-10
-                            </div>
-                            <div class="feature">
-                                <span class="feature-icon">🪙</span>
-                                Награда: 50 WCoins
-                            </div>
-                        </div>
-                        <div class="game-action">
-                            <button class="play-btn">
-                                <span>ИГРАТЬ</span>
-                                <span class="btn-arrow">➜</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-glow"></div>
+                <a href="chess.html" class="game-card neon-border">
+                    <div class="game-icon">♔</div>
+                    <div class="game-title">Космические шахматы</div>
+                    <div class="game-description">Классическая игра в футуристическом стиле. Брось вызов искусственному интеллекту или сразись с друзьями!</div>
+                </a>
+                <!-- Место для будущих игр -->
+                <div class="game-card" style="opacity: 0.6;">
+                    <div class="game-icon">🚀</div>
+                    <div class="game-title">Скоро...</div>
+                    <div class="game-description">Новая космическая игра уже на подходе!</div>
                 </div>
-
-                <!-- WSnake -->
-                <div class="game-card" onclick="openGame('wsnake')">
-                    <div class="game-card-inner">
-                        <div class="game-header">
-                            <div class="game-icon snake-icon">🐍</div>
-                            <div class="game-badge popular">ПОПУЛЯРНАЯ</div>
-                        </div>
-                        <h3 class="game-title">WSNAKE</h3>
-                        <p class="game-description">
-                            Классическая змейка в космическом стиле. 
-                            Собирайте звезды и избегайте астероидов!
-                        </p>
-                        <div class="game-features">
-                            <div class="feature">
-                                <span class="feature-icon">🎯</span>
-                                Сложность: 1-10
-                            </div>
-                            <div class="feature">
-                                <span class="feature-icon">🪙</span>
-                                Награда: 30 WCoins
-                            </div>
-                        </div>
-                        <div class="game-action">
-                            <button class="play-btn">
-                                <span>ИГРАТЬ</span>
-                                <span class="btn-arrow">➜</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-glow"></div>
-                </div>
-
-                <!-- WTetris -->
-                <div class="game-card" onclick="openGame('wtetris')">
-                    <div class="game-card-inner">
-                        <div class="game-header">
-                            <div class="game-icon tetris-icon">◼️</div>
-                            <div class="game-badge">КЛАССИКА</div>
-                        </div>
-                        <h3 class="game-title">WTETRIS</h3>
-                        <p class="game-description">
-                            Тетрис с космическими блоками и неоновыми эффектами. 
-                            Стройте галактики из фигур!
-                        </p>
-                        <div class="game-features">
-                            <div class="feature">
-                                <span class="feature-icon">🎯</span>
-                                Сложность: 1-10
-                            </div>
-                            <div class="feature">
-                                <span class="feature-icon">🪙</span>
-                                Награда: 40 WCoins
-                            </div>
-                        </div>
-                        <div class="game-action">
-                            <button class="play-btn">
-                                <span>ИГРАТЬ</span>
-                                <span class="btn-arrow">➜</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-glow"></div>
-                </div>
-
-                <!-- WPacman -->
-                <div class="game-card" onclick="openGame('wpacman')">
-                    <div class="game-card-inner">
-                        <div class="game-header">
-                            <div class="game-icon pacman-icon">👻</div>
-                            <div class="game-badge new">НОВАЯ</div>
-                        </div>
-                        <h3 class="game-title">WPACMAN</h3>
-                        <p class="game-description">
-                            Пакмен с умными призраками-инопланетянами. 
-                            Бегите, собирайте точки и побеждайте!
-                        </p>
-                        <div class="game-features">
-                            <div class="feature">
-                                <span class="feature-icon">🎯</span>
-                                Сложность: 1-10
-                            </div>
-                            <div class="feature">
-                                <span class="feature-icon">🪙</span>
-                                Награда: 35 WCoins
-                            </div>
-                        </div>
-                        <div class="game-action">
-                            <button class="play-btn">
-                                <span>ИГРАТЬ</span>
-                                <span class="btn-arrow">➜</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-glow"></div>
-                </div>
-
-                <!-- WMemory -->
-                <div class="game-card" onclick="openGame('wmemory')">
-                    <div class="game-card-inner">
-                        <div class="game-header">
-                            <div class="game-icon memory-icon">🧠</div>
-                            <div class="game-badge">ДЛЯ МОЗГА</div>
-                        </div>
-                        <h3 class="game-title">WMEMORY</h3>
-                        <p class="game-description">
-                            Тренируйте память с космическими картами. 
-                            Найдите все пары в открытом космосе!
-                        </p>
-                        <div class="game-features">
-                            <div class="feature">
-                                <span class="feature-icon">🎯</span>
-                                Сложность: 1-10
-                            </div>
-                            <div class="feature">
-                                <span class="feature-icon">🪙</span>
-                                Награда: 25 WCoins
-                            </div>
-                        </div>
-                        <div class="game-action">
-                            <button class="play-btn">
-                                <span>ИГРАТЬ</span>
-                                <span class="btn-arrow">➜</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-glow"></div>
+                <div class="game-card" style="opacity: 0.6;">
+                    <div class="game-icon">👾</div>
+                    <div class="game-title">Скоро...</div>
+                    <div class="game-description">Готовься к межгалактическим баталиям!</div>
                 </div>
             </div>
         </section>
+    </main>
 
-        <!-- Секция магазина -->
-        <section id="shop" class="shop-section">
-            <div class="section-header">
-                <h2 class="section-title">МАГАЗИН WCOINS</h2>
-                <div class="section-subtitle">Приобретайте уникальные космические предметы</div>
-            </div>
+    <!-- Подвал -->
+    <footer>
+        <div class="company-info">
+            © 2024 Wexer Games. Все права защищены.<br>
+            Wexer Company - лидер в создании космических развлечений будущего.
+        </div>
+    </footer>
 
-            <div class="shop-notice">
-                <div class="notice-icon">🔮</div>
-                <h3>ДОСТУПНО ПОСЛЕ РЕГИСТРАЦИИ</h3>
-                <p>Войдите в систему чтобы получить доступ к магазину с украшениями и бонусами</p>
-                <a href="reg.html" class="notice-btn">СОЗДАТЬ АККАУНТ</a>
-            </div>
-        </section>
-
-        <!-- Футер -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <span class="logo-icon">🚀</span>
-                        <span class="logo-text">WEXER GAMES</span>
-                    </div>
-                    <p class="footer-tagline">Космические игры нового поколения</p>
-                </div>
+    <script>
+        // Создание звездного фона
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starsCount = 200;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
                 
-                <div class="footer-info">
-                    <p>&copy; 2024 Wexer Games. Все права защищены.</p>
-                    <p class="project-credit">Проект Wexer</p>
-                </div>
-            </div>
-        </footer>
-    </div>
+                // Случайные позиции и размеры
+                const size = Math.random() * 2 + 1;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 5;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${left}%`;
+                star.style.top = `${top}%`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
 
-    <script src="js/main.js"></script>
+        createStars();
+    </script>
 </body>
 </html>
