@@ -1,158 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSK Vocabulary //by dastan</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: url('https://i.imgur.com/Z8v9W8W.jpg') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #5a3e2b;
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 1000px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        h1 {
-            color: #e75480;
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        .subtitle {
-            text-align: center;
-            color: #7d5a50;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-        }
-        .hsk-levels {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .hsk-level {
-            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
-            color: white;
-            padding: 25px;
-            font-size: 1.5em;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            text-decoration: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        .hsk-level:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 20px rgba(0,0,0,0.2);
-        }
-        .hsk-level::before {
-            content: "🌸";
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 0.8em;
-            opacity: 0.7;
-        }
-        .sakura-fall {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        @media (max-width: 768px) {
-            .hsk-levels {
-                grid-template-columns: 1fr;
-            }
-            .container {
-                padding: 20px;
-                width: 95%;
-            }
-        }
-    </style>
+    <title>Wexer Games - Оффлайн игровая платформа</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="sakura-fall" id="sakura"></div>
-    
-    <div class="container">
-        <h1>🌸 HSK Vocabulary 🌸  //powered by dastan</h1>
-        <p class="subtitle">Select your HSK level to begin studying</p>
-        
-        <div class="hsk-levels">
-            <a href="hsk1" class="hsk-level">HSK 1</a>
-            <a href="hsk2" class="hsk-level">HSK 2</a>
-            <a href="hsk3" class="hsk-level">HSK 3</a>
-            <a href="hsk4" class="hsk-level">HSK 4</a>
-            <a href="hsk5" class="hsk-level">HSK 5</a>
-            <a href="hsk6" class="hsk-level">HSK 6</a>
-            <a href="hsk7" class="hsk-level">HSK 7</a>
-            <a href="hsk8" class="hsk-level">HSK 8</a>
-            <a href="hsk9" class="hsk-level">HSK 9</a>
-        </div>
-    </div>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>Wexer Games</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="#games">Игры</a>
+                <a href="#shop">Магазин</a>
+                <div class="user-section">
+                    <span id="userInfo" style="display: none;">
+                        <img id="userAvatar" src="" alt="Аватар" class="avatar-small">
+                        <span id="userName"></span> | 
+                        <span id="userCoins">0</span> WCoins
+                        <button onclick="logout()" class="btn-logout">Выйти</button>
+                    </span>
+                    <span id="guestSection">
+                        <a href="login.html" class="btn-login">Войти</a>
+                        <a href="reg.html" class="btn-reg">Регистрация</a>
+                    </span>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <script>
-        // Sakura falling animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const sakuraContainer = document.getElementById('sakura');
-            const sakuraCount = 15;
-            
-            for (let i = 0; i < sakuraCount; i++) {
-                createSakura();
-            }
-            
-            function createSakura() {
-                const sakura = document.createElement('div');
-                sakura.innerHTML = '🌸';
-                sakura.style.position = 'absolute';
-                sakura.style.left = Math.random() * 100 + 'vw';
-                sakura.style.top = '-20px';
-                sakura.style.opacity = Math.random() * 0.5 + 0.3;
-                sakura.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                sakura.style.animation = `fall ${Math.random() * 10 + 5}s linear infinite`;
-                sakura.style.animationDelay = Math.random() * 5 + 's';
-                
-                sakuraContainer.appendChild(sakura);
-                
-                // Remove sakura after animation completes to prevent DOM overload
-                setTimeout(() => {
-                    sakura.remove();
-                    createSakura();
-                }, (Math.random() * 10000 + 10000));
-            }
-            
-            // Add styles for animation
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes fall {
-                    to {
-                        transform: translateY(100vh) rotate(360deg);
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        });
-    </script>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Добро пожаловать в Wexer Games</h2>
+                <p>Играйте в увлекательные игры против ИИ с различными уровнями сложности</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="scrollToGames()">Начать играть</button>
+                    <button class="btn-secondary" onclick="showFeatureInfo()">Особенности</button>
+                </div>
+            </div>
+            <div class="hero-features" id="featureInfo" style="display: none;">
+                <div class="feature">
+                    <h3>🎮 5 Уникальных Игр</h3>
+                    <p>Все игры начинаются на W и имеют уникальный геймплей</p>
+                </div>
+                <div class="feature">
+                    <h3>🤖 Умные Боты</h3>
+                    <p>10 уровней сложности для каждого режима</p>
+                </div>
+                <div class="feature">
+                    <h3>🪙 WCoins Система</h3>
+                    <p>Зарабатывайте монеты и покупайте украшения</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="games" class="games-section">
+            <h2>Наши игры</h2>
+            <div class="games-grid">
+                <div class="game-card" onclick="openGame('wchess')">
+                    <div class="game-icon">♔</div>
+                    <h3>WChess</h3>
+                    <p>Классические шахматы с ИИ противником</p>
+                    <div class="game-info">
+                        <span class="difficulty">Сложность: 1-10</span>
+                        <span class="coins-reward">Награда: 50 WCoins</span>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="openGame('wsnake')">
+                    <div class="game-icon">🐍</div>
+                    <h3>WSnake</h3>
+                    <p>Классическая змейка с улучшенной графикой</p>
+                    <div class="game-info">
+                        <span class="difficulty">Сложность: 1-10</span>
+                        <span class="coins-reward">Награда: 30 WCoins</span>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="openGame('wtetris')">
+                    <div class="game-icon">◼️</div>
+                    <h3>WTetris</h3>
+                    <p>Тетрис в космическом стиле</p>
+                    <div class="game-info">
+                        <span class="difficulty">Сложность: 1-10</span>
+                        <span class="coins-reward">Награда: 40 WCoins</span>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="openGame('wpacman')">
+                    <div class="game-icon">👻</div>
+                    <h3>WPacman</h3>
+                    <p>Пакмен с умными призраками</p>
+                    <div class="game-info">
+                        <span class="difficulty">Сложность: 1-10</span>
+                        <span class="coins-reward">Награда: 35 WCoins</span>
+                    </div>
+                </div>
+
+                <div class="game-card" onclick="openGame('wmemory')">
+                    <div class="game-icon">🧠</div>
+                    <h3>WMemory</h3>
+                    <p>Игра на память с космическими картами</p>
+                    <div class="game-info">
+                        <span class="difficulty">Сложность: 1-10</span>
+                        <span class="coins-reward">Награда: 25 WCoins</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="shop" class="shop-section">
+            <h2>Магазин WCoins</h2>
+            <div class="shop-container">
+                <div class="shop-category">
+                    <h3>🖼️ Смена аватара</h3>
+                    <div class="shop-items">
+                        <div class="shop-item" onclick="buyAvatarChange()">
+                            <div class="item-icon">👤</div>
+                            <h4>Смена аватара</h4>
+                            <p>Измените ваш аватар</p>
+                            <div class="item-price">100 WCoins</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shop-category">
+                    <h3>✨ Украшения аватара</h3>
+                    <div class="shop-items-grid" id="decorationsGrid">
+                        <!-- Украшения будут загружены через JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Wexer Games. Все права защищены.</p>
+            <p class="small-text">Проект Wexer</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
