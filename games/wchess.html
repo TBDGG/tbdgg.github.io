@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WChess - Wexer Games</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1><a href="../index.html" style="color: inherit; text-decoration: none;">Wexer Games</a></h1>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Главная</a>
+                <a href="../index.html#games">Игры</a>
+                <a href="../index.html#shop">Магазин</a>
+                <div class="user-section">
+                    <span id="userInfo" style="display: none;">
+                        <img id="userAvatar" src="" alt="Аватар" class="avatar-small">
+                        <span id="userName"></span> | 
+                        <span id="userCoins">0</span> WCoins
+                        <button onclick="logout()" class="btn-logout">Выйти</button>
+                    </span>
+                </div>
+            </div>
+        </nav>
+    </header>
 
+    <main class="game-page">
+        <div class="game-header">
+            <h1>♔ WChess</h1>
+            <p>Сыграйте в шахматы против ИИ</p>
+        </div>
+
+        <div class="difficulty-selector">
+            <button class="difficulty-btn" onclick="setDifficulty(1)">Уровень 1</button>
+            <button class="difficulty-btn" onclick="setDifficulty(3)">Уровень 3</button>
+            <button class="difficulty-btn" onclick="setDifficulty(5)">Уровень 5</button>
+            <button class="difficulty-btn" onclick="setDifficulty(7)">Уровень 7</button>
+            <button class="difficulty-btn" onclick="setDifficulty(10)">Уровень 10</button>
+        </div>
+
+        <div class="game-area placeholder">
+            <div>
+                <h3>Шахматная доска</h3>
+                <p>Текущая сложность: <span id="currentDifficulty">1</span></p>
+                <p>Заработайте WCoins, побеждая ИИ!</p>
+                <button class="btn-primary" onclick="simulateGame()">Сыграть матч</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentDifficulty = 1;
+
+        function setDifficulty(level) {
+            currentDifficulty = level;
+            document.getElementById('currentDifficulty').textContent = level;
+            
+            // Убираем активный класс со всех кнопок
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Добавляем активный класс к выбранной кнопке
+            event.target.classList.add('active');
+        }
+
+        function simulateGame() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user) {
+                alert('Пожалуйста, войдите в систему!');
+                return;
+            }
+
+            // Симуляция игры - 70% шанс на победу на низких уровнях
+            const winChance = 0.7 - (currentDifficulty * 0.05);
+            const isWin = Math.random() < winChance;
+            
+            if (isWin) {
+                const coinsWon = 50 - (currentDifficulty * 2);
+                alert(`🎉 Победа! Вы выиграли ${coinsWon} WCoins!`);
+                if (typeof addCoins === 'function') {
+                    addCoins(coinsWon, 'WChess');
+                }
+            } else {
+                alert('💔 Поражение! ИИ оказался слишком сильным. Попробуйте еще раз!');
+            }
+        }
+
+        // Проверка авторизации
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('currentUser');
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            const userData = JSON.parse(user);
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('userName').textContent = userData.username;
+            document.getElementById('userCoins').textContent = userData.coins || 0;
+            
+            // Устанавливаем первый уровень сложности как активный
+            document.querySelector('.difficulty-btn').classList.add('active');
+        });
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = '../index.html';
+        }
+    </script>
+</body>
+</html>
